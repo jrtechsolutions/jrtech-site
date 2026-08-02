@@ -12,6 +12,7 @@
 # next.js
 /.next/
 /out/
+/dist/
 
 # production
 /build
@@ -28,6 +29,11 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+.env.example
+
+/api/.rate/*.json
+/api/.contact_token.example
+/api/.smtp_password.example
 
 # vercel
 .vercel
@@ -35,3 +41,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# PHP contact secrets / logs (nunca versionar)
+/api/.contact_token
+/api/.smtp_password
+/api/contatos.txt
+/api/.rate/*.json

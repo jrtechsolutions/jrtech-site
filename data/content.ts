@@ -6,6 +6,9 @@ export const site = {
   email:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
     "contato@jrtechnologysolutions.com.br",
+  whatsapp:
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5511973802744",
+  phoneDisplay: "(11) 97380-2744",
 } as const;
 
 export const nav = {

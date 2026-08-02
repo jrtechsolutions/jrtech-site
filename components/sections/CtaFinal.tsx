@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ctaFinal } from "@/data/content";
+import { ctaFinal, site } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/button";
@@ -91,7 +91,6 @@ function ContactIcon({ type }: { type: string }) {
 
 export function CtaFinal() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
   const {
     register,
@@ -112,17 +111,29 @@ export function CtaFinal() {
   const onSubmit = async (data: ContactFormData) => {
     setStatus("idle");
     try {
-      const response = await fetch("/api/contact", {
+      const contactUrl =
+        process.env.NEXT_PUBLIC_CONTACT_API_URL ?? "/api/contact.php";
+
+      const response = await fetch(contactUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          message: data.message,
+          phone: "",
+          website: data.website ?? "",
+        }),
       });
 
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as {
-          error?: string;
-        } | null;
-        throw new Error(payload?.error ?? "Request failed");
+      const payload = (await response.json().catch(() => null)) as {
+        success?: boolean;
+        message?: string;
+      } | null;
+
+      if (!response.ok || payload?.success === false) {
+        throw new Error(payload?.message ?? "Request failed");
       }
 
       setStatus("success");
@@ -133,8 +144,8 @@ export function CtaFinal() {
   };
 
   const detailHref = (key: string, href?: string) => {
-    if (key === "phone" && whatsappNumber) {
-      return `https://wa.me/${whatsappNumber}`;
+    if (key === "phone") {
+      return `https://wa.me/${site.whatsapp}`;
     }
     return href;
   };

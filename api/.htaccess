@@ -1,0 +1,15 @@
+Options -Indexes
+
+# Bloqueia arquivos sensíveis (secrets, logs e rate-limit)
+<FilesMatch "^(\.|contatos\.txt)">
+  Require all denied
+</FilesMatch>
+
+<Files "contatos.txt">
+  Require all denied
+</Files>
+
+# Garante que contact.php continue acessível
+<Files "contact.php">
+  Require all granted
+</Files>

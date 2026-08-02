@@ -284,7 +284,7 @@ export function DiagnosticPanel() {
 
   const depoisRows = rowsDepois.map((row) => {
     let value = "";
-    let positive = row.positive;
+    const positive = row.positive;
     if (row.key === "uptime") value = formatUptime(display.uptime);
     else if (row.key === "latency") value = formatLatency(Math.round(display.latency));
     else if (row.key === "backups") value = display.backups;
