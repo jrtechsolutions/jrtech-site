@@ -1,7 +1,7 @@
 export const site = {
   name: "JR Technology Solutions",
   description:
-    "Infraestrutura, segurança e soluções digitais para empresas que precisam de uma tecnologia mais organizada, segura e preparada para crescer.",
+    "TI para pequenas e médias empresas em São Paulo — diagnóstico, implementação e acompanhamento em infraestrutura, segurança e desenvolvimento. Fale diretamente com o responsável técnico.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrtechnologysolutions.com.br",
   email:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
@@ -148,22 +148,30 @@ export const projetos = {
   title: "Projetos desenvolvidos",
   items: [
     {
-      thumb: "FATIA DE LEI",
+      type: "image" as const,
+      image: "/fatia-de-lei-thumb.jpg",
+      imageAlt: "Homepage do site Fatia de Lei",
+      objectPosition: "object-top" as const,
+      fit: "object-cover" as const,
       category: "Desenvolvimento",
       title: "Fatia de Lei",
-      description: "Sistema web para gerenciamento operacional.",
+      description:
+        "E-commerce completo para loja de doces, com catálogo de produtos, painel administrativo para gestão de receitas e estoque, e pagamento integrado via API do PicPay. Desenvolvido do zero, do frontend ao backend.",
+      link: {
+        href: "https://fatiadelei.com.br",
+        label: "↗ fatiadelei.com.br",
+      },
     },
     {
-      thumb: "MONITORAMENTO",
+      type: "image" as const,
+      image: "/grafana-thumbnail.jpg",
+      imageAlt: "Dashboard Grafana com status ONLINE e métricas do ambiente",
+      objectPosition: "object-top" as const,
+      fit: "object-cover" as const,
       category: "Infraestrutura",
       title: "Ambiente de monitoramento",
-      description: "Docker, Grafana, Prometheus, Alertas.",
-    },
-    {
-      thumb: "SOB MEDIDA",
-      category: "Sistemas",
-      title: "Soluções personalizadas",
-      description: "Aplicações desenvolvidas conforme necessidade.",
+      description:
+        "Ambiente de monitoramento interno com Grafana + Prometheus — métricas de CPU, memória, disco e rede em tempo real, com alertas automáticos configurados via Docker.",
     },
   ],
 } as const;
@@ -248,8 +256,9 @@ export const sobre = {
 export const ctaFinal = {
   kicker: "Contato",
   title: "Vamos entender o momento da sua tecnologia?",
-  text: "Solicite um diagnóstico ou converse com um especialista. Avaliamos o cenário atual e indicamos os próximos passos com objetividade.",
-  whatsappCta: "Enviar mensagem",
+  text: "Prefere uma conversa rápida? Fale diretamente pelo WhatsApp.",
+  whatsappCta: "Falar com um especialista",
+  formIntro: "Ou prefere enviar os dados antes? Preencha abaixo e retorno em até 24h.",
   details: [
     {
       key: "phone",
@@ -276,7 +285,6 @@ export const ctaFinal = {
   ],
   form: {
     kicker: "Formulário — Diagnóstico",
-    subtitle: "Preencha os dados e retornamos com o próximo passo.",
     name: "Nome",
     namePlaceholder: "Seu nome",
     email: "E-mail",
@@ -285,7 +293,7 @@ export const ctaFinal = {
     companyPlaceholder: "Nome da empresa",
     message: "Mensagem",
     messagePlaceholder: "Conte brevemente o que você precisa...",
-    submit: "Solicitar diagnóstico",
+    submit: "Enviar mensagem",
     success: "Mensagem enviada com sucesso. Entraremos em contato em breve.",
     error: "Não foi possível enviar sua mensagem. Tente novamente mais tarde.",
   },
