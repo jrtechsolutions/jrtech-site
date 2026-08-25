@@ -7,9 +7,23 @@ Options -Indexes
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
 
-# Fallback para rotas sem arquivo (ex.: refresh em path inexistente)
+# Sitemap e robots — servir como arquivos estáticos (evita rewrite/PHP)
+<Files "sitemap.xml">
+  <IfModule mod_headers.c>
+    Header set Content-Type "application/xml; charset=utf-8"
+  </IfModule>
+</Files>
+
+<Files "robots.txt">
+  <IfModule mod_headers.c>
+    Header set Content-Type "text/plain; charset=utf-8"
+  </IfModule>
+</Files>
+
+# Fallback para rotas SPA (não afeta arquivos reais como sitemap.xml)
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteRule ^(sitemap\.xml|robots\.txt)$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]

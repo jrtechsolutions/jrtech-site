@@ -9,6 +9,7 @@ type SemanticCardProps = {
   children: React.ReactNode;
   className?: string;
   hover: SemanticHover;
+  variant?: "problema" | "solucao";
 };
 
 function OpenLockIcon() {
@@ -64,16 +65,19 @@ function HoverHint({
   active,
   className,
   children,
+  withCursor,
 }: {
   active: boolean;
   className?: string;
   children: React.ReactNode;
+  withCursor?: boolean;
 }) {
   return (
     <div
       className={cn(
         "semantic-hint pointer-events-none absolute z-[3] font-mono text-[10px]",
         active && "is-active",
+        withCursor && active && "semantic-doc-cursor",
         className,
       )}
       aria-hidden="true"
@@ -87,19 +91,23 @@ export function SemanticCard({
   children,
   className,
   hover,
+  variant = "problema",
 }: SemanticCardProps) {
   const reduced = usePrefersReducedMotion();
   const [hovered, setHovered] = useState(false);
   const active = hovered;
+  const isSolucao = variant === "solucao";
 
   return (
     <article
       className={cn(
-        "semantic-card group relative rounded-md border border-border bg-white transition-[border-color] duration-150",
+        "semantic-card group relative rounded-md border border-[rgba(22,37,61,0.28)] bg-white transition-[border-color,transform,box-shadow] duration-200 ease-out",
         hover === "warn" && active && "border-[#C0392B]",
+        isSolucao && "semantic-solucao-card",
         className,
       )}
       data-hover={hover}
+      data-variant={variant}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -184,7 +192,10 @@ export function SemanticCard({
       {hover === "scan" && (
         <HoverHint
           active={active}
-          className="right-3 top-3 flex items-center gap-1.5 text-success"
+          className={cn(
+            "right-3 top-3 flex items-center gap-1.5 text-success",
+            isSolucao && "semantic-scan-stamp",
+          )}
         >
           <span className="h-1.5 w-1.5 rounded-full bg-success" />
           <span>scan: 0 ameaças</span>
@@ -195,6 +206,7 @@ export function SemanticCard({
       {hover === "processes" && (
         <HoverHint
           active={active}
+          withCursor={isSolucao}
           className="right-3 top-3 text-dimension"
         >
           processos: documentados · v2.1
@@ -209,6 +221,24 @@ export function SemanticCard({
       )}
 
       {children}
+
+      {/* Barra indeterminada — Suporte (S.02) */}
+      {isSolucao && hover === "response" && (
+        <div
+          className="semantic-support-bar pointer-events-none absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          aria-hidden="true"
+        >
+          <div className="semantic-support-bar-inner h-full w-1/3 bg-signal" />
+        </div>
+      )}
+
+      {/* Linha de build — Desenvolvimento (S.05) */}
+      {isSolucao && hover === "build" && (
+        <div
+          className="semantic-build-line pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-signal transition-[width] duration-[250ms] ease-out group-hover:w-full"
+          aria-hidden="true"
+        />
+      )}
     </article>
   );
 }

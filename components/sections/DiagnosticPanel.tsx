@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { animate } from "framer-motion";
-import { EASE_SNAP, usePrefersReducedMotion } from "@/lib/motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { animateCounter } from "@/lib/easing";
+import { usePrefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type Scenario = "antes" | "depois";
@@ -20,12 +20,14 @@ type RowDef = {
   positive?: boolean;
 };
 
-const BASE_DEPOIS = {
-  uptime: 99.98,
-  latency: 12,
+const FINAL_DEPOIS = {
+  uptime: 99.9,
+  latency: 18,
 } as const;
 
-const LATENCY_POOL = [11, 12, 13, 14] as const;
+const LATENCY_POOL = [16, 17, 18, 19, 20] as const;
+
+const ENTRY_DURATION_MS = 900;
 
 const rowsDepois: RowDef[] = [
   {
@@ -91,12 +93,18 @@ const scenariosAntes = [
   },
 ] as const;
 
+const FINAL_DISPLAY = {
+  backups: "100% verificados",
+  monitoramento: "ativo",
+  vulnerabilidades: "0",
+} as const;
+
 function formatUptime(n: number) {
-  return `${n.toFixed(2)}%`;
+  return `${n.toFixed(1)}%`;
 }
 
 function formatLatency(n: number) {
-  return `${n}ms`;
+  return `${Math.round(n)}ms`;
 }
 
 function randomBetween(min: number, max: number) {
@@ -105,38 +113,120 @@ function randomBetween(min: number, max: number) {
 
 function pickLatency(current: number) {
   const options = LATENCY_POOL.filter((n) => n !== current);
-  return options[Math.floor(Math.random() * options.length)] ?? 12;
+  return options[Math.floor(Math.random() * options.length)] ?? 18;
 }
 
 export function DiagnosticPanel() {
   const reduced = usePrefersReducedMotion();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
+  const cancelAnimRef = useRef<(() => void) | null>(null);
+
   const [scenario, setScenario] = useState<Scenario>("depois");
   const [playKey, setPlayKey] = useState(0);
   const [entryDone, setEntryDone] = useState(reduced);
   const [live, setLive] = useState<LiveValues>({
-    uptime: BASE_DEPOIS.uptime,
-    latency: BASE_DEPOIS.latency,
+    uptime: FINAL_DEPOIS.uptime,
+    latency: FINAL_DEPOIS.latency,
     vulnFlash: false,
   });
   const [flashKey, setFlashKey] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [display, setDisplay] = useState({
-    uptime: 0,
-    latency: 0,
-    backups: "",
-    monitoramento: "",
-    vulnerabilidades: "",
+    uptime: reduced ? FINAL_DEPOIS.uptime : 0,
+    latency: reduced ? FINAL_DEPOIS.latency : 0,
+    backups: reduced ? FINAL_DISPLAY.backups : "",
+    monitoramento: reduced ? FINAL_DISPLAY.monitoramento : "",
+    vulnerabilidades: reduced ? FINAL_DISPLAY.vulnerabilidades : "",
   });
+
   const liveRef = useRef(live);
   liveRef.current = live;
 
-  // Entrada com contagem (uma vez por playKey / cenário)
+  const setFinalDisplay = useCallback(() => {
+    setDisplay({
+      uptime: FINAL_DEPOIS.uptime,
+      latency: FINAL_DEPOIS.latency,
+      backups: FINAL_DISPLAY.backups,
+      monitoramento: FINAL_DISPLAY.monitoramento,
+      vulnerabilidades: FINAL_DISPLAY.vulnerabilidades,
+    });
+    setEntryDone(true);
+  }, []);
+
+  const runEntryAnimation = useCallback(() => {
+    cancelAnimRef.current?.();
+
+    setDisplay({
+      uptime: 0,
+      latency: 0,
+      backups: "",
+      monitoramento: "",
+      vulnerabilidades: "",
+    });
+    setEntryDone(false);
+
+    const timers: number[] = [];
+
+    const cancelUptime = animateCounter(
+      0,
+      FINAL_DEPOIS.uptime,
+      ENTRY_DURATION_MS,
+      (v) => setDisplay((d) => ({ ...d, uptime: v })),
+    );
+
+    const cancelLatency = animateCounter(
+      0,
+      FINAL_DEPOIS.latency,
+      ENTRY_DURATION_MS,
+      (v) => setDisplay((d) => ({ ...d, latency: v })),
+    );
+
+    timers.push(
+      window.setTimeout(
+        () => setDisplay((d) => ({ ...d, backups: FINAL_DISPLAY.backups })),
+        ENTRY_DURATION_MS * 0.55,
+      ),
+    );
+    timers.push(
+      window.setTimeout(
+        () =>
+          setDisplay((d) => ({
+            ...d,
+            monitoramento: FINAL_DISPLAY.monitoramento,
+          })),
+        ENTRY_DURATION_MS * 0.7,
+      ),
+    );
+    timers.push(
+      window.setTimeout(
+        () =>
+          setDisplay((d) => ({
+            ...d,
+            vulnerabilidades: FINAL_DISPLAY.vulnerabilidades,
+          })),
+        ENTRY_DURATION_MS * 0.85,
+      ),
+    );
+    timers.push(
+      window.setTimeout(() => setEntryDone(true), ENTRY_DURATION_MS),
+    );
+
+    cancelAnimRef.current = () => {
+      cancelUptime();
+      cancelLatency();
+      timers.forEach(clearTimeout);
+    };
+  }, []);
+
+  // Reset ao trocar cenário / playKey
   useEffect(() => {
-    setEntryDone(reduced);
+    hasAnimatedRef.current = false;
+    cancelAnimRef.current?.();
     setFlashKey(null);
     setLive({
-      uptime: BASE_DEPOIS.uptime,
-      latency: BASE_DEPOIS.latency,
+      uptime: FINAL_DEPOIS.uptime,
+      latency: FINAL_DEPOIS.latency,
       vulnFlash: false,
     });
 
@@ -153,14 +243,7 @@ export function DiagnosticPanel() {
     }
 
     if (reduced) {
-      setDisplay({
-        uptime: BASE_DEPOIS.uptime,
-        latency: BASE_DEPOIS.latency,
-        backups: "diário · ok",
-        monitoramento: "ativo",
-        vulnerabilidades: "0 críticas",
-      });
-      setEntryDone(true);
+      setFinalDisplay();
       return;
     }
 
@@ -171,53 +254,31 @@ export function DiagnosticPanel() {
       monitoramento: "",
       vulnerabilidades: "",
     });
+    setEntryDone(false);
+  }, [playKey, reduced, scenario, setFinalDisplay]);
 
-    const timers: number[] = [];
-    const controls: Array<{ stop: () => void }> = [];
+  // Contagem ao entrar na viewport (IntersectionObserver)
+  useEffect(() => {
+    if (reduced || scenario !== "depois") return;
 
-    const uptimeAnim = animate(0, BASE_DEPOIS.uptime, {
-      duration: 0.55,
-      delay: 0,
-      ease: EASE_SNAP,
-      onUpdate: (v) => setDisplay((d) => ({ ...d, uptime: v })),
-    });
-    controls.push(uptimeAnim);
+    const el = panelRef.current;
+    if (!el) return;
 
-    const latencyAnim = animate(0, BASE_DEPOIS.latency, {
-      duration: 0.55,
-      delay: 0.1,
-      ease: EASE_SNAP,
-      onUpdate: (v) => setDisplay((d) => ({ ...d, latency: v })),
-    });
-    controls.push(latencyAnim);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || hasAnimatedRef.current) return;
 
-    timers.push(
-      window.setTimeout(
-        () => setDisplay((d) => ({ ...d, backups: "diário · ok" })),
-        200,
-      ),
-    );
-    timers.push(
-      window.setTimeout(
-        () => setDisplay((d) => ({ ...d, monitoramento: "ativo" })),
-        300,
-      ),
-    );
-    timers.push(
-      window.setTimeout(
-        () => setDisplay((d) => ({ ...d, vulnerabilidades: "0 críticas" })),
-        400,
-      ),
-    );
-    timers.push(
-      window.setTimeout(() => setEntryDone(true), 1100),
+        hasAnimatedRef.current = true;
+        runEntryAnimation();
+        observer.unobserve(el);
+      },
+      { threshold: 0.4 },
     );
 
-    return () => {
-      timers.forEach(clearTimeout);
-      controls.forEach((c) => c.stop());
-    };
-  }, [playKey, reduced, scenario]);
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [playKey, reduced, runEntryAnimation, scenario]);
 
   // Loop ao vivo — só no cenário "depois", após a entrada
   useEffect(() => {
@@ -244,7 +305,7 @@ export function DiagnosticPanel() {
           setDisplay((d) => ({ ...d, latency: next }));
           setFlashKey(null);
         } else if (kind === "uptime") {
-          const next = Math.min(99.99, Number((current.uptime + 0.01).toFixed(2)));
+          const next = Math.min(99.99, Number((current.uptime + 0.1).toFixed(1)));
           if (next === current.uptime) {
             schedule();
             return;
@@ -260,7 +321,10 @@ export function DiagnosticPanel() {
           setLive((v) => ({ ...v, vulnFlash: true }));
           await wait(300);
           if (cancelled) return;
-          setDisplay((d) => ({ ...d, vulnerabilidades: "0 críticas" }));
+          setDisplay((d) => ({
+            ...d,
+            vulnerabilidades: FINAL_DISPLAY.vulnerabilidades,
+          }));
           setLive((v) => ({ ...v, vulnFlash: false }));
           setFlashKey(null);
         }
@@ -276,6 +340,10 @@ export function DiagnosticPanel() {
     };
   }, [entryDone, reduced, scenario]);
 
+  useEffect(() => {
+    return () => cancelAnimRef.current?.();
+  }, []);
+
   const switchScenario = (next: Scenario) => {
     if (next === scenario) return;
     setScenario(next);
@@ -286,7 +354,7 @@ export function DiagnosticPanel() {
     let value = "";
     const positive = row.positive;
     if (row.key === "uptime") value = formatUptime(display.uptime);
-    else if (row.key === "latency") value = formatLatency(Math.round(display.latency));
+    else if (row.key === "latency") value = formatLatency(display.latency);
     else if (row.key === "backups") value = display.backups;
     else if (row.key === "monitoramento") value = display.monitoramento;
     else value = display.vulnerabilidades;
@@ -327,6 +395,7 @@ export function DiagnosticPanel() {
       </div>
 
       <div
+        ref={panelRef}
         className="overflow-hidden rounded-md border-[1.5px] border-ink bg-white"
         aria-label="Painel de diagnóstico do ambiente"
       >
@@ -419,7 +488,7 @@ function PanelRow({
         </span>
         <span
           className={cn(
-            "whitespace-nowrap font-mono text-[11px] font-medium transition-colors duration-150",
+            "whitespace-nowrap font-mono text-[11px] font-medium tabular-nums transition-colors duration-150",
             flashing
               ? "text-signal"
               : positive

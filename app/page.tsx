@@ -6,6 +6,7 @@ import { Projetos } from "@/components/sections/Projetos";
 import { Diferencial } from "@/components/sections/Diferencial";
 import { Tecnologias } from "@/components/sections/Tecnologias";
 import { Sobre } from "@/components/sections/Sobre";
+import { Faq } from "@/components/sections/Faq";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 
 export default function HomePage() {
@@ -19,6 +20,7 @@ export default function HomePage() {
       <Diferencial />
       <Tecnologias />
       <Sobre />
+      <Faq />
       <CtaFinal />
     </>
   );

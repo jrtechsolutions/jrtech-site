@@ -15,6 +15,7 @@ export function Solucoes() {
           <SemanticCard
             key={item.tag}
             hover={item.hover}
+            variant="solucao"
             className="p-[26px]"
           >
             <span className="mb-3 block font-mono text-[11px] text-dimension">

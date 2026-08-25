@@ -2,7 +2,7 @@ export const site = {
   name: "JR Technology Solutions",
   description:
     "TI para pequenas e médias empresas em São Paulo — diagnóstico, implementação e acompanhamento em infraestrutura, segurança e desenvolvimento. Fale diretamente com o responsável técnico.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jrtechnologysolutions.com.br",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jrtechnologysolutions.com.br",
   email:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ??
     "contato@jrtechnologysolutions.com.br",
@@ -297,6 +297,38 @@ export const ctaFinal = {
     success: "Mensagem enviada com sucesso. Entraremos em contato em breve.",
     error: "Não foi possível enviar sua mensagem. Tente novamente mais tarde.",
   },
+} as const;
+
+export const faq = {
+  kicker: "FAQ",
+  title: "Perguntas frequentes",
+  items: [
+    {
+      question: "Atendem empresa pequena, com poucos computadores?",
+      answer:
+        "Sim. Boa parte dos atendimentos começa justamente em ambientes pequenos que precisam de organização antes de crescer.",
+    },
+    {
+      question: "Preciso de contrato longo?",
+      answer:
+        "Não. O diagnóstico inicial não exige contrato — a partir dele, definimos junto o melhor formato.",
+    },
+    {
+      question: "Como funciona o diagnóstico inicial?",
+      answer:
+        "Analisamos rede, equipamentos e processos atuais, e devolvemos um panorama claro de riscos e oportunidades.",
+    },
+    {
+      question: "Quanto tempo leva para ver resultado?",
+      answer:
+        "Depende do escopo, mas melhorias pontuais costumam aparecer nas primeiras semanas. Projetos maiores seguem um cronograma definido no planejamento, com marcos claros.",
+    },
+    {
+      question: "Vocês atendem remoto ou precisa ser presencial?",
+      answer:
+        "A maior parte do atendimento é remota. Quando necessário, visitamos presencialmente na região de São Paulo.",
+    },
+  ],
 } as const;
 
 export const footer = {

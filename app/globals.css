@@ -63,6 +63,39 @@
     overflow: hidden;
   }
 
+  /* Soluções — hover semântico por pilar */
+  .semantic-solucao-card[data-hover="uptime"]:hover {
+    border-color: #e8720c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(22, 37, 61, 0.08);
+  }
+
+  .semantic-solucao-card[data-hover="scan"]:hover .semantic-scan-stamp.is-active {
+    color: #e8720c;
+    animation: stamp-pulse 2.5s ease-in-out infinite;
+  }
+
+  .semantic-solucao-card[data-hover="scan"]:hover
+    .semantic-scan-stamp.is-active
+    .rounded-full {
+    background-color: #e8720c;
+  }
+
+  .semantic-solucao-card[data-hover="build"]:hover {
+    transform: scale(1.005);
+  }
+
+  .semantic-doc-cursor::after {
+    content: "|";
+    margin-left: 1px;
+    color: #e8720c;
+    animation: cursor-blink 1s step-end infinite;
+  }
+
+  .semantic-support-bar-inner {
+    animation: support-indeterminate 1.4s ease-in-out infinite;
+  }
+
   .semantic-hint {
     opacity: 0;
     transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -205,6 +238,50 @@
   }
 }
 
+@keyframes stamp-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes cursor-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes support-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@keyframes timeline-step {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-timeline-step {
+  animation: timeline-step 200ms ease-out both;
+}
+
 .diagnostic-live-dot {
   animation: diagnostic-live 1.8s ease-in-out infinite;
 }
@@ -229,5 +306,31 @@
   .semantic-progress-bar {
     animation: none;
     width: 66%;
+  }
+
+  .semantic-solucao-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .semantic-solucao-card[data-hover="scan"]:hover .semantic-scan-stamp.is-active {
+    animation: none;
+  }
+
+  .semantic-doc-cursor::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .semantic-support-bar-inner {
+    animation: none;
+  }
+
+  .semantic-build-line {
+    width: 100% !important;
+  }
+
+  .animate-timeline-step {
+    animation: none;
   }
 }
