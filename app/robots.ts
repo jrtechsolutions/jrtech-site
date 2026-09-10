@@ -1,14 +1,24 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/data/content";
 
 export default function robots(): MetadataRoute.Robots {
-  const base = site.url.replace(/\/$/, "");
-
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-    },
-    sitemap: `${base}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+      // Rastreadores de busca/citação de IA
+      { userAgent: "OAI-SearchBot", allow: "/" },
+      { userAgent: "ChatGPT-User", allow: "/" },
+      { userAgent: "Claude-SearchBot", allow: "/" },
+      { userAgent: "Claude-User", allow: "/" },
+      { userAgent: "PerplexityBot", allow: "/" },
+      { userAgent: "Perplexity-User", allow: "/" },
+      // Rastreadores de treinamento de modelo
+      { userAgent: "GPTBot", allow: "/" },
+      { userAgent: "ClaudeBot", allow: "/" },
+      { userAgent: "Google-Extended", allow: "/" },
+    ],
+    sitemap: "https://www.jrtechnologysolutions.com.br/sitemap.xml",
   };
 }

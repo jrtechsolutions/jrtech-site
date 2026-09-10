@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 import { comoTrabalhamos } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
@@ -8,58 +13,20 @@ import { usePrefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const STEP_COUNT = comoTrabalhamos.steps.length;
-const STEP_DELAY_MS = 200;
 
 export function ComoTrabalhamos() {
   const reduced = usePrefersReducedMotion();
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const hasStartedRef = useRef(false);
-  const timersRef = useRef<number[]>([]);
+  const ref = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(reduced ? 1 : 0);
 
-  const [visibleSteps, setVisibleSteps] = useState(reduced ? STEP_COUNT : 0);
-  const [lineProgress, setLineProgress] = useState(reduced ? 100 : 0);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.75", "end 0.45"],
+  });
 
-  useEffect(() => {
-    if (reduced) {
-      setVisibleSteps(STEP_COUNT);
-      setLineProgress(100);
-      return;
-    }
-
-    const el = sectionRef.current;
-    if (!el || hasStartedRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || hasStartedRef.current) return;
-
-        hasStartedRef.current = true;
-        observer.unobserve(el);
-
-        for (let i = 0; i < STEP_COUNT; i++) {
-          const timerId = window.setTimeout(() => {
-            setVisibleSteps(i + 1);
-            setLineProgress(((i + 1) / STEP_COUNT) * 100);
-          }, i * STEP_DELAY_MS);
-          timersRef.current.push(timerId);
-        }
-      },
-      { threshold: 0.2 },
-    );
-
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [reduced]);
-
-  useEffect(() => {
-    return () => {
-      timersRef.current.forEach(clearTimeout);
-      timersRef.current = [];
-    };
-  }, []);
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (!reduced) setProgress(value);
+  });
 
   return (
     <Section>
@@ -67,48 +34,47 @@ export function ComoTrabalhamos() {
       <h2 className="mb-10 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-bold text-ink">
         {comoTrabalhamos.title}
       </h2>
-
-      <div ref={sectionRef} className="relative max-w-[640px] pl-7">
+      <div ref={ref} className="relative max-w-[640px]">
         <div
-          className="absolute bottom-2 left-[5px] top-2 w-px bg-[rgba(22,37,61,0.28)]"
+          className="absolute bottom-5 left-[19px] top-5 w-[1.5px] bg-connector"
           aria-hidden="true"
         />
         <div
-          className="absolute bottom-2 left-[5px] top-2 w-px overflow-hidden"
+          className="absolute bottom-5 left-[19px] top-5 w-[1.5px] overflow-hidden"
           aria-hidden="true"
         >
-          <div
-            className="w-full origin-top bg-[rgba(22,37,61,0.28)] transition-[height] duration-[200ms] ease-out"
-            style={{ height: `${lineProgress}%` }}
+          <motion.div
+            className="h-full w-full origin-top bg-ink"
+            style={{ scaleY: reduced ? 1 : scrollYProgress }}
           />
         </div>
-
         <div className="flex flex-col">
           {comoTrabalhamos.steps.map((step, index) => {
-            const isVisible = visibleSteps > index;
-
-            if (!isVisible) return null;
+            const threshold =
+              STEP_COUNT <= 1 ? 0 : index / (STEP_COUNT - 1);
+            const filled = progress >= threshold - 0.02;
 
             return (
               <div
                 key={step.num}
-                className={cn(
-                  "relative pb-7 last:pb-0",
-                  !reduced && "animate-timeline-step",
-                )}
+                className="relative flex gap-5 pb-[34px] last:pb-0"
               >
-                <span
-                  className="absolute -left-7 top-1 h-[9px] w-[9px] rounded-full border-2 border-paper bg-signal shadow-[0_0_0_1px_#E8720C]"
-                  aria-hidden="true"
-                />
-
-                <span className="mb-1 block font-mono text-[11px] text-dimension">
+                <div
+                  className={cn(
+                    "relative z-[1] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-[1.5px] font-mono text-[13px]",
+                    filled
+                      ? "border-ink bg-ink text-paper"
+                      : "border-ink bg-paper text-ink",
+                  )}
+                >
                   {step.num}
-                </span>
-                <h3 className="mb-1.5 font-subheading text-base font-semibold text-ink">
-                  {step.title}
-                </h3>
-                <p className="text-[13.5px] text-ink-2">{step.description}</p>
+                </div>
+                <div>
+                  <h3 className="mb-1.5 font-subheading text-base font-semibold text-ink">
+                    {step.title}
+                  </h3>
+                  <p className="text-[13.5px] text-ink-2">{step.description}</p>
+                </div>
               </div>
             );
           })}

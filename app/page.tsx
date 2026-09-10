@@ -8,10 +8,12 @@ import { Tecnologias } from "@/components/sections/Tecnologias";
 import { Sobre } from "@/components/sections/Sobre";
 import { Faq } from "@/components/sections/Faq";
 import { CtaFinal } from "@/components/sections/CtaFinal";
+import { FaqStructuredData } from "@/components/FaqStructuredData";
 
 export default function HomePage() {
   return (
     <>
+      <FaqStructuredData />
       <Hero />
       <Problema />
       <Solucoes />
@@ -19,8 +21,8 @@ export default function HomePage() {
       <Projetos />
       <Diferencial />
       <Tecnologias />
-      <Sobre />
       <Faq />
+      <Sobre />
       <CtaFinal />
     </>
   );

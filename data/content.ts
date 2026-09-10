@@ -22,12 +22,11 @@ export const nav = {
 } as const;
 
 export const hero = {
-  kicker: "JR Technology Solutions",
+  kicker: "Consultoria técnica · São Paulo",
   title: "Organizamos, protegemos e evoluímos a tecnologia da sua empresa",
   subtitle:
     "Infraestrutura, segurança e soluções digitais para empresas que precisam de uma tecnologia mais organizada, segura e preparada para crescer.",
   primaryCta: "Solicitar diagnóstico",
-  secondaryCta: "Conhecer soluções",
 } as const;
 
 export const problema = {
@@ -148,11 +147,8 @@ export const projetos = {
   title: "Projetos desenvolvidos",
   items: [
     {
-      type: "image" as const,
-      image: "/fatia-de-lei-thumb.jpg",
-      imageAlt: "Homepage do site Fatia de Lei",
-      objectPosition: "object-top" as const,
-      fit: "object-cover" as const,
+      type: "pattern" as const,
+      thumbLabel: "fatiadelei.com.br",
       category: "Desenvolvimento",
       title: "Fatia de Lei",
       description:
@@ -165,7 +161,8 @@ export const projetos = {
     {
       type: "image" as const,
       image: "/grafana-thumbnail.jpg",
-      imageAlt: "Dashboard Grafana com status ONLINE e métricas do ambiente",
+      imageAlt:
+        "Painel Grafana de monitoramento de infraestrutura de TI da JR Technology Solutions",
       objectPosition: "object-top" as const,
       fit: "object-cover" as const,
       category: "Infraestrutura",
@@ -243,7 +240,7 @@ export const sobre = {
   titleLine1: "Experiência técnica.",
   titleLine2: "Atenção de verdade.",
   paragraphs: [
-    "A JR Technology Solutions nasceu da experiência prática em infraestrutura, cloud, segurança da informação e desenvolvimento de sistemas. Com mais de um ano de operação, atuamos diretamente com empresas que precisam de tecnologia mais organizada, segura e preparada para crescer.",
+    "A JR Technology Solutions nasceu da experiência prática em infraestrutura, cloud, segurança da informação e desenvolvimento de sistemas. Com mais de um ano de operação em São Paulo, atuamos diretamente com pequenas e médias empresas que precisam de tecnologia mais organizada, segura e preparada para crescer.",
     "Aqui, você não fala com um vendedor para ser repassado a um técnico. Quem entende o seu problema é quem resolve — com diagnóstico real, planejamento honesto e acompanhamento contínuo.",
   ],
   stats: [
@@ -300,33 +297,29 @@ export const ctaFinal = {
 } as const;
 
 export const faq = {
-  kicker: "FAQ",
+  kicker: "Dúvidas",
   title: "Perguntas frequentes",
+  intro: "Tire suas dúvidas antes de solicitar o diagnóstico.",
   items: [
-    {
-      question: "Atendem empresa pequena, com poucos computadores?",
-      answer:
-        "Sim. Boa parte dos atendimentos começa justamente em ambientes pequenos que precisam de organização antes de crescer.",
-    },
-    {
-      question: "Preciso de contrato longo?",
-      answer:
-        "Não. O diagnóstico inicial não exige contrato — a partir dele, definimos junto o melhor formato.",
-    },
     {
       question: "Como funciona o diagnóstico inicial?",
       answer:
-        "Analisamos rede, equipamentos e processos atuais, e devolvemos um panorama claro de riscos e oportunidades.",
+        "Uma conversa de 30-40 minutos (presencial ou remota) pra entender seu ambiente atual, os problemas que você já percebe e os que ainda não apareceram. Você recebe um resumo por escrito com as prioridades identificadas — sem custo, sem compromisso.",
     },
     {
-      question: "Quanto tempo leva para ver resultado?",
+      question: "Vocês atendem empresas fora de São Paulo?",
       answer:
-        "Depende do escopo, mas melhorias pontuais costumam aparecer nas primeiras semanas. Projetos maiores seguem um cronograma definido no planejamento, com marcos claros.",
+        "O diagnóstico e boa parte do trabalho de infraestrutura, segurança e desenvolvimento podem ser feitos remotamente. Para visitas presenciais, o foco atual é São Paulo capital e região.",
     },
     {
-      question: "Vocês atendem remoto ou precisa ser presencial?",
+      question: "Qual o prazo médio de um projeto?",
       answer:
-        "A maior parte do atendimento é remota. Quando necessário, visitamos presencialmente na região de São Paulo.",
+        "Varia conforme o escopo definido no diagnóstico. Um ajuste pontual de infraestrutura pode levar poucos dias; um projeto de desenvolvimento sob medida costuma levar algumas semanas. O prazo específico só é definido depois do diagnóstico.",
+    },
+    {
+      question: "Preciso trocar minha infraestrutura atual?",
+      answer:
+        "Na maioria dos casos, não. O diagnóstico avalia o que já existe e prioriza ajustes e organização antes de qualquer substituição.",
     },
   ],
 } as const;
@@ -334,4 +327,5 @@ export const faq = {
 export const footer = {
   privacyLabel: "Política de privacidade",
   privacyHref: "/politica-de-privacidade",
+  locationNote: "Consultoria de TI em São Paulo",
 } as const;

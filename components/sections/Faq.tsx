@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+import { Minus, Plus } from "lucide-react";
 import { faq } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/lib/motion";
 
 export function Faq() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const baseId = useId();
+  const reduced = usePrefersReducedMotion();
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
     setOpenIndex((current) => (current === index ? null : index));
@@ -15,46 +19,67 @@ export function Faq() {
 
   return (
     <Section id="faq">
-      <Kicker>{faq.kicker}</Kicker>
-      <h2 className="mb-8 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-bold text-ink">
-        {faq.title}
-      </h2>
+      <div className="mx-auto max-w-[720px] text-center">
+        <Kicker className="mb-3">{faq.kicker}</Kicker>
+        <h2 className="mb-3 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-bold text-ink">
+          {faq.title}
+        </h2>
+        <p className="mx-auto max-w-md font-body text-[14px] leading-relaxed text-ink-2">
+          {faq.intro}
+        </p>
+      </div>
 
-      <div className="max-w-[720px]">
+      <div className="mx-auto mt-10 max-w-[680px] md:mt-12">
         {faq.items.map((item, index) => {
           const isOpen = openIndex === index;
+          const panelId = `${baseId}-panel-${index}`;
+          const buttonId = `${baseId}-button-${index}`;
 
           return (
             <div
               key={item.question}
-              className="border-b border-[rgba(22,37,61,0.14)] first:border-t first:border-[rgba(22,37,61,0.14)]"
+              className="border-b border-border first:border-t"
             >
-              <button
-                type="button"
-                className="flex w-full items-center justify-between gap-4 py-4 text-left font-body text-[14px] font-medium text-ink"
-                aria-expanded={isOpen}
-                onClick={() => toggle(index)}
-              >
-                <span>{item.question}</span>
-                <span
-                  className={cn(
-                    "shrink-0 font-mono text-base text-signal transition-transform duration-[250ms] ease-out",
-                    isOpen && "rotate-45",
-                  )}
-                  aria-hidden="true"
+              <h3>
+                <button
+                  id={buttonId}
+                  type="button"
+                  className="flex w-full items-center justify-between gap-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => toggle(index)}
                 >
-                  +
-                </span>
-              </button>
+                  <span className="font-subheading text-[15px] font-semibold text-ink">
+                    {item.question}
+                  </span>
+                  <span
+                    className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border text-ink"
+                    aria-hidden="true"
+                  >
+                    {isOpen ? (
+                      <Minus className="h-3.5 w-3.5" strokeWidth={1.75} />
+                    ) : (
+                      <Plus className="h-3.5 w-3.5" strokeWidth={1.75} />
+                    )}
+                  </span>
+                </button>
+              </h3>
+
               <div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
                 className={cn(
-                  "overflow-hidden transition-[max-height] duration-[250ms] ease-out",
-                  isOpen ? "max-h-48" : "max-h-0",
+                  "grid transition-[grid-template-rows] ease-out",
+                  reduced ? "duration-0" : "duration-300",
+                  isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                 )}
               >
-                <p className="pb-4 text-[12.5px] leading-relaxed text-ink/60">
-                  {item.answer}
-                </p>
+                <div className="overflow-hidden">
+                  <p className="pb-4 pr-11 text-[13.5px] leading-relaxed text-ink-2">
+                    {item.answer}
+                  </p>
+                </div>
               </div>
             </div>
           );

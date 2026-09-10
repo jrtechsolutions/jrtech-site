@@ -1,0 +1,27 @@
+# JR Technology Solutions
+
+> Consultoria e implementação de TI para pequenas e médias empresas em São Paulo — infraestrutura, segurança da informação, desenvolvimento de sistemas e governança de tecnologia.
+
+JR Technology Solutions é uma consultoria técnica de TI operada por Paulo Júnior, atendendo empresas de pequeno e médio porte em São Paulo com diagnóstico, implementação e acompanhamento contínuo — sem intermediários entre o cliente e quem executa o trabalho.
+
+## Serviços
+- Infraestrutura e Cloud: servidores, redes, ambientes cloud (AWS/Azure/GCP), monitoramento e backups
+- Segurança da Informação: controle de acesso, proteção de dados, boas práticas e hardening
+- Desenvolvimento: sistemas web sob medida, e-commerce, APIs e integrações
+- Governança de Tecnologia: documentação, processos e planejamento
+- Suporte e Gestão de TI: manutenção e acompanhamento contínuo
+
+## Diferencial
+Atendimento direto com o responsável técnico — sem terceirização do atendimento. Diagnóstico realizado antes de qualquer proposta.
+
+## Projetos
+- Fatia de Lei (fatiadelei.com.br): e-commerce completo com painel administrativo e pagamento via API PicPay
+- Ambiente de monitoramento interno: Grafana + Prometheus, métricas em tempo real
+
+## Contato
+- WhatsApp/telefone: (11) 97380-2744
+- E-mail: contato@jrtechnologysolutions.com.br
+- Área de atuação: São Paulo, SP (diagnóstico e parte do trabalho remoto para outras regiões)
+
+## Site
+https://www.jrtechnologysolutions.com.br

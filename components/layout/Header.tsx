@@ -1,37 +1,64 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
-import { LayoutGroup, motion } from "framer-motion";
 import { nav } from "@/data/content";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { EASE_SNAP, usePrefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/lib/motion";
 
-const SECTION_IDS = nav.links.map((link) => link.href.replace("#", ""));
+const SECTION_IDS = nav.links.map((l) => l.href.replace("#", ""));
 
 function scrollToHash(href: string) {
   const id = href.replace("#", "");
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 export function Header() {
   const reduced = usePrefersReducedMotion();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const [activeHref, setActiveHref] = useState<string | null>(null);
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const dropdownId = "nav-pill-mobile";
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
+  const firstItemRef = useRef<HTMLButtonElement>(null);
+
+  const navRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+
+  const highlightHref = hoveredHref ?? activeHref;
+
+  const movePill = useCallback(
+    (href: string | null) => {
+      const pill = pillRef.current;
+      const track = navRef.current;
+      if (!pill || !track) return;
+
+      if (!href) {
+        pill.style.opacity = "0";
+        return;
+      }
+
+      const target = linkRefs.current.get(href);
+      if (!target) {
+        pill.style.opacity = "0";
+        return;
+      }
+
+      const trackRect = track.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+
+      pill.style.left = `${targetRect.left - trackRect.left}px`;
+      pill.style.width = `${targetRect.width}px`;
+      pill.style.opacity = "1";
+    },
+    [],
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,11 +67,9 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Scroll spy
   useEffect(() => {
-    const elements = SECTION_IDS.map((id) =>
-      document.getElementById(id),
-    ).filter((el): el is HTMLElement => Boolean(el));
-
+    const elements = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     if (elements.length === 0) return;
 
     const ratios = new Map<string, number>();
@@ -52,11 +77,12 @@ export function Header() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          ratios.set(entry.target.id, entry.intersectionRatio);
+          ratios.set((entry.target as HTMLElement).id, entry.intersectionRatio);
         }
 
         let bestId: string | null = null;
         let bestRatio = 0;
+
         for (const id of SECTION_IDS) {
           const ratio = ratios.get(id) ?? 0;
           if (ratio > bestRatio) {
@@ -65,16 +91,12 @@ export function Header() {
           }
         }
 
-        // Nenhum traço no Hero — só quando alguma âncora está em foco
         if (!bestId || bestRatio < 0.05) {
-          const first = document.getElementById("solucoes");
-          if (first && first.getBoundingClientRect().top > window.innerHeight * 0.45) {
-            setActiveHref(null);
-            return;
-          }
+          setActiveHref(null);
+          return;
         }
 
-        setActiveHref(bestId ? `#${bestId}` : null);
+        setActiveHref(`#${bestId}`);
       },
       {
         root: null,
@@ -87,107 +109,205 @@ export function Header() {
     return () => observer.disconnect();
   }, []);
 
-  const handleNavClick = (href: string) => {
-    setOpen(false);
-    scrollToHash(href);
-  };
+  // Reposiciona a pílula no highlight (hover tem prioridade sobre ativo)
+  useEffect(() => {
+    movePill(highlightHref);
+  }, [highlightHref, movePill]);
+
+  useEffect(() => {
+    const onResize = () => movePill(highlightHref);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [highlightHref, movePill]);
+
+  // Mobile dropdown: fecha no clique fora e Escape
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileOpen(false);
+        menuBtnRef.current?.focus();
+      }
+    };
+
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node | null;
+      if (!target) return;
+      if (dropdownRef.current?.contains(target)) return;
+      if (menuBtnRef.current?.contains(target)) return;
+      setMobileOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown, { passive: true });
+
+    const t = window.setTimeout(() => firstItemRef.current?.focus(), reduced ? 0 : 60);
+
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+    };
+  }, [mobileOpen, reduced]);
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-border bg-paper backdrop-blur-md transition-shadow",
-        scrolled && "shadow-sm",
+        "sticky top-0 z-50 border-b border-border transition-[background-color,box-shadow,backdrop-filter] duration-200",
+        scrolled ? "bg-paper/95 shadow-sm backdrop-blur-md" : "bg-paper/80 backdrop-blur-sm",
       )}
     >
-      <div className="site-container flex items-center justify-between py-[18px]">
+      <div className="site-container grid grid-cols-[1fr_auto] items-center gap-3 py-[18px] lg:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
-          className="flex min-h-11 min-w-11 items-center"
+          className="flex min-h-11 items-center justify-self-start"
           aria-label="JR Technology Solutions — início"
         >
           <Image
             src="/logo-ink.png"
             alt="JR Technology Solutions logo"
-            width={120}
+            width={110}
             height={28}
             className="h-[26px] w-auto"
             priority
           />
         </Link>
 
-        <LayoutGroup>
-          <nav
-            className="hidden items-center gap-8 md:flex"
-            aria-label="Principal"
-          >
-            {nav.links.map((link) => {
-              const isActive = activeHref === link.href;
-              const hasUnderline =
-                (hoveredHref ?? activeHref) === link.href;
-              return (
-                <button
-                  key={link.href}
-                  type="button"
-                  onClick={() => handleNavClick(link.href)}
-                  onMouseEnter={() => setHoveredHref(link.href)}
-                  onMouseLeave={() => setHoveredHref(null)}
-                  onFocus={() => setHoveredHref(link.href)}
-                  onBlur={() => setHoveredHref(null)}
-                  className="relative min-h-11 text-sm text-ink-2 transition-colors hover:text-ink"
-                  aria-current={isActive ? "true" : undefined}
-                >
-                  {link.label}
-                  {hasUnderline && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute bottom-2 left-0 right-0 h-[1.5px] bg-signal"
-                      transition={
-                        reduced
-                          ? { duration: 0 }
-                          : { duration: 0.25, ease: EASE_SNAP }
-                      }
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-        </LayoutGroup>
+        {/* Desktop — pílula centralizada na viewport */}
+        <nav
+          ref={navRef}
+          className="relative hidden items-center gap-[2px] justify-self-center rounded-full border border-border bg-[#F4F7F9] p-1 lg:flex"
+          aria-label="Navegação"
+          onMouseLeave={() => setHoveredHref(null)}
+        >
+          <div
+            ref={pillRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute top-1 bottom-1 z-[1] rounded-full bg-ink opacity-0"
+            style={{
+              left: 0,
+              width: 0,
+              transition: reduced
+                ? "none"
+                : "left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s",
+            }}
+          />
 
-        <div className="md:hidden">
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger
-              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg border-[1.5px] border-ink bg-transparent text-ink transition-colors hover:bg-white"
+          {nav.links.map((item) => {
+            const isLit = highlightHref === item.href;
+            return (
+              <button
+                key={item.href}
+                ref={(el) => {
+                  if (el) linkRefs.current.set(item.href, el);
+                  else linkRefs.current.delete(item.href);
+                }}
+                type="button"
+                onClick={() => scrollToHash(item.href)}
+                onMouseEnter={() => setHoveredHref(item.href)}
+                onFocus={() => setHoveredHref(item.href)}
+                onBlur={(e) => {
+                  if (!navRef.current?.contains(e.relatedTarget as Node)) {
+                    setHoveredHref(null);
+                  }
+                }}
+                aria-current={activeHref === item.href ? "page" : undefined}
+                className={cn(
+                  "relative z-[2] rounded-full px-4 py-2 text-[13px] font-medium font-body transition-colors duration-200",
+                  "focus-visible:outline-none",
+                  isLit ? "text-paper" : "text-[#3D4E63]",
+                )}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center justify-self-end gap-2">
+          {/* CTA desktop */}
+          <button
+            type="button"
+            onClick={() => scrollToHash("#contato")}
+            className="btn-ruler hidden items-center justify-center rounded-md bg-ink px-[22px] py-[11px] text-[13.5px] font-medium text-paper transition-colors duration-150 hover:bg-ink/90 focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none lg:inline-flex"
+            style={{
+              clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
+            }}
+          >
+            {nav.cta}
+          </button>
+
+          {/* Mobile menu */}
+          <div className="relative lg:hidden">
+            <button
+              ref={menuBtnRef}
+              type="button"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-expanded={mobileOpen}
+              aria-controls={dropdownId}
               aria-label="Abrir menu de navegação"
+              className="inline-flex min-h-11 items-center justify-center rounded-md px-3 text-ink transition-colors hover:text-signal focus-visible:text-signal focus-visible:outline-none"
             >
-              <Menu className="h-5 w-5" />
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-paper text-ink">
-              <SheetHeader>
-                <SheetTitle className="text-left font-heading text-ink">
-                  Menu
-                </SheetTitle>
-              </SheetHeader>
-              <nav className="mt-8 flex flex-col gap-2" aria-label="Mobile">
-                {nav.links.map((link) => (
+              <Menu className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+            </button>
+
+            {mobileOpen && (
+              <div
+                ref={dropdownRef}
+                id={dropdownId}
+                role="menu"
+                className="absolute right-0 top-[calc(100%+10px)] z-[60] w-[min(288px,calc(100vw-2rem))] overflow-hidden rounded-xl border border-border bg-white p-1.5 shadow-sm"
+              >
+                <div className="flex flex-col gap-[2px]">
+                  {nav.links.map((item, index) => {
+                    const isActive = activeHref === item.href;
+                    return (
+                      <button
+                        key={item.href}
+                        ref={index === 0 ? firstItemRef : undefined}
+                        type="button"
+                        role="menuitem"
+                        aria-current={isActive ? "page" : undefined}
+                        onClick={() => {
+                          setMobileOpen(false);
+                          scrollToHash(item.href);
+                        }}
+                        className={cn(
+                          "rounded-lg px-4 py-2.5 text-left text-[13.5px] font-body transition-colors duration-150",
+                          "w-full bg-transparent text-[#3D4E63] hover:bg-ink hover:text-paper",
+                          "focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none",
+                          isActive && "bg-ink text-paper",
+                        )}
+                      >
+                        {item.label}
+                      </button>
+                    );
+                  })}
+
+                  <div className="my-1.5 border-t border-border" />
+
                   <button
-                    key={link.href}
                     type="button"
-                    onClick={() => handleNavClick(link.href)}
-                    className={cn(
-                      "min-h-11 rounded-md px-2 text-left text-base text-ink-2 transition-colors hover:bg-white hover:text-ink",
-                      activeHref === link.href && "text-ink",
-                    )}
-                    aria-current={
-                      activeHref === link.href ? "true" : undefined
-                    }
+                    role="menuitem"
+                    onClick={() => {
+                      setMobileOpen(false);
+                      scrollToHash("#contato");
+                    }}
+                    className="btn-ruler inline-flex w-full items-center justify-center rounded-md bg-ink px-4 py-3 text-[13.5px] font-medium text-paper transition-colors duration-150 hover:bg-ink/90 focus-visible:outline-none"
+                    style={{
+                      clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
+                    }}
                   >
-                    {link.label}
+                    {nav.cta}
                   </button>
-                ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

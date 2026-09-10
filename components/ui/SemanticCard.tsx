@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Clock, LockOpen } from "lucide-react";
 import type { SemanticHover } from "@/lib/card-hover";
 import { usePrefersReducedMotion } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -11,55 +12,6 @@ type SemanticCardProps = {
   hover: SemanticHover;
   variant?: "problema" | "solucao";
 };
-
-function OpenLockIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="3"
-        y="6.5"
-        width="8"
-        height="6"
-        rx="1"
-        stroke="#C0392B"
-        strokeWidth="1.2"
-      />
-      <path
-        d="M5 6.5V4.2a2 2 0 0 1 3.7-1"
-        stroke="#C0392B"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      aria-hidden="true"
-    >
-      <circle cx="6" cy="6" r="4.4" stroke="#16253D" strokeWidth="1.1" />
-      <path
-        d="M6 3.5V6l1.8 1.2"
-        stroke="#16253D"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function HoverHint({
   active,
@@ -115,7 +67,7 @@ export function SemanticCard({
       {hover === "warn" && (
         <HoverHint
           active={active}
-          className="right-3 top-3 rounded-[3px] border border-[#FECACA] bg-[#FEF2F2] px-2 py-1 text-[#C0392B]"
+          className="right-3 top-3 rounded-[3px] border border-[#FECACA] bg-[#FEF2F5] px-2 py-1 text-[#C0392B]"
         >
           WARN: ambiente sem estrutura
         </HoverHint>
@@ -127,7 +79,12 @@ export function SemanticCard({
           active={active}
           className="right-3 top-3 flex items-center gap-1.5 text-[#C0392B]"
         >
-          <OpenLockIcon />
+          <LockOpen
+            className="h-3.5 w-3.5"
+            strokeWidth={1.75}
+            color="#C0392B"
+            aria-hidden="true"
+          />
           <span>acesso: não protegido</span>
         </HoverHint>
       )}
@@ -183,7 +140,12 @@ export function SemanticCard({
           active={active}
           className="right-3 top-3 flex items-center gap-1.5 text-ink"
         >
-          <ClockIcon />
+          <Clock
+            className="h-3 w-3"
+            strokeWidth={1.75}
+            color="#16253D"
+            aria-hidden="true"
+          />
           <span>resposta: &lt; 2h</span>
         </HoverHint>
       )}

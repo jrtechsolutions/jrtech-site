@@ -197,6 +197,48 @@
   .sobre-character-float {
     animation: charFloat 5s ease-in-out infinite;
   }
+
+  .hero-visual-clip {
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  .hero-cta-clip {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 12px) 0,
+      100% 12px,
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .hero-status-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(3px);
+  }
+
+  .hero-character {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 70%,
+      transparent 100%
+    );
+  }
+
+  .menu-overlay-link {
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: none;
+  }
+
+  .menu-overlay-link:focus,
+  .menu-overlay-link:focus-visible,
+  .menu-overlay-link:active {
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+  }
 }
 
 @keyframes semantic-progress {

@@ -1,10 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { hero } from "@/data/content";
-import { Kicker } from "@/components/ui/Kicker";
-import { Button } from "@/components/ui/button";
-import { DiagnosticPanel } from "@/components/sections/DiagnosticPanel";
 import { EASE_SNAP, usePrefersReducedMotion } from "@/lib/motion";
 
 function scrollTo(id: string) {
@@ -18,7 +16,7 @@ const TITLE_LINES = [
 
 function PlotterHeadline({ reduced }: { reduced: boolean }) {
   return (
-    <h1 className="mb-5 font-heading text-[clamp(2rem,5vw,2.875rem)] font-bold leading-[1.14] text-ink">
+    <h1 className="mb-5 font-heading text-[clamp(2rem,4.5vw,2.625rem)] font-bold leading-[1.14] text-ink">
       {TITLE_LINES.map((line, i) => (
         <span key={line} className="block overflow-hidden">
           <motion.span
@@ -47,33 +45,55 @@ export function Hero() {
   const reduced = usePrefersReducedMotion();
 
   return (
-    <section className="relative border-b border-border bg-paper pt-14 md:pt-[56px]">
-      <div className="site-container relative flex flex-col items-center gap-10 pb-16 md:flex-row md:gap-12 md:pb-[88px]">
-        <div className="w-full max-w-[540px] flex-1">
-          <Kicker>{hero.kicker}</Kicker>
+    <section
+      id="hero"
+      className="hero-section relative min-h-[560px] overflow-hidden border-b border-border bg-paper"
+    >
+      {/* Coluna visual — desktop absolute */}
+      <div className="hero-visual absolute inset-y-0 right-0 z-[1] hidden w-[44%] lg:block">
+        <div className="hero-visual-clip absolute inset-0 bg-ink" />
+        <div className="absolute inset-0 flex items-end justify-center">
+          <Image
+            src="/personagem-transparente.png"
+            alt="Personagem representando o atendimento direto da JR Technology Solutions, consultoria de TI em São Paulo"
+            width={420}
+            height={520}
+            className="hero-character relative z-[2] h-[88%] w-auto object-contain object-bottom"
+            priority
+          />
+        </div>
+      </div>
+
+      <div className="site-container relative z-[2] flex min-h-[560px] flex-col justify-center py-16 lg:py-20">
+        <div className="w-full max-w-[420px] lg:max-w-none lg:w-[46%] lg:pr-8">
+          <span className="mb-4 block font-mono text-xs uppercase tracking-[0.07em] text-signal">
+            {hero.kicker}
+          </span>
           <PlotterHeadline reduced={reduced} />
-          <p className="mb-8 max-w-[460px] text-[15.5px] leading-relaxed text-ink-2">
+          <p className="mb-8 max-w-[420px] text-[14.5px] leading-relaxed text-ink-2">
             {hero.subtitle}
           </p>
-          <div className="flex flex-col gap-3.5 sm:flex-row">
-            <Button
-              onClick={() => scrollTo("contato")}
-              className="btn-ruler min-h-11 bg-ink px-6 text-sm font-medium text-paper hover:bg-ink/90"
-            >
-              {hero.primaryCta}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => scrollTo("solucoes")}
-              className="btn-ruler min-h-11 border-[1.5px] border-ink bg-transparent px-6 text-sm font-medium text-ink hover:bg-white"
-            >
-              {hero.secondaryCta}
-            </Button>
-          </div>
+          <button
+            type="button"
+            onClick={() => scrollTo("contato")}
+            className="btn-ruler hero-cta-clip inline-flex min-h-12 items-center bg-ink px-8 text-[14.5px] font-medium text-paper transition-colors hover:bg-ink/90"
+          >
+            {hero.primaryCta}
+          </button>
         </div>
 
-        <div className="flex w-full flex-1 justify-center">
-          <DiagnosticPanel />
+        {/* Coluna visual — mobile/tablet no fluxo */}
+        <div className="relative mt-12 flex w-full flex-col items-center lg:hidden">
+          <div className="relative flex w-full justify-center overflow-hidden rounded-sm bg-ink px-4 pt-8">
+            <Image
+              src="/personagem-transparente.png"
+              alt="Personagem representando o atendimento direto da JR Technology Solutions, consultoria de TI em São Paulo"
+              width={280}
+              height={300}
+              className="h-[280px] w-auto object-contain object-bottom"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

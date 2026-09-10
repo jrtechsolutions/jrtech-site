@@ -15,7 +15,10 @@ export function Footer() {
           height={20}
           className="h-5 w-auto opacity-80"
         />
-        <p>© {year} {site.name}. Todos os direitos reservados.</p>
+        <p>
+          © {year} {site.name}. {footer.locationNote}. Todos os direitos
+          reservados.
+        </p>
         <div className="flex flex-wrap items-center gap-5">
           <Link
             href={footer.privacyHref}

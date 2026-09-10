@@ -2,7 +2,6 @@ import Image from "next/image";
 import { projetos } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
-import { cn } from "@/lib/utils";
 
 export function Projetos() {
   return (
@@ -17,20 +16,28 @@ export function Projetos() {
             key={item.title}
             className="overflow-hidden rounded-md border border-border bg-white"
           >
-            <div
-              className={cn(
-                "relative h-[160px] w-full overflow-hidden",
-                item.title === "Fatia de Lei" ? "bg-[#F5F0E8]" : "bg-ink",
-              )}
-            >
-              <Image
-                src={item.image}
-                alt={item.imageAlt}
-                fill
-                className={cn(item.fit, item.objectPosition)}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
+            {item.type === "image" ? (
+              <div className="relative h-[140px] w-full overflow-hidden bg-ink">
+                <Image
+                  src={item.image}
+                  alt={item.imageAlt}
+                  fill
+                  className={`${item.fit} ${item.objectPosition}`}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ) : (
+              <div
+                className="flex h-[140px] items-center justify-center font-mono text-[11px] text-dimension"
+                style={{
+                  background:
+                    "repeating-linear-gradient(135deg, #E3E9EE, #E3E9EE 10px, #DAE1E7 10px, #DAE1E7 20px)",
+                }}
+                aria-hidden="true"
+              >
+                {item.thumbLabel}
+              </div>
+            )}
             <div className="p-5">
               <span className="mb-2 block font-mono text-[10.5px] text-signal">
                 {item.category}

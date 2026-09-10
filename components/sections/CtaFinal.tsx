@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { ctaFinal, site } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
@@ -125,25 +126,41 @@ export function CtaFinal() {
                 "href" in detail ? detail.href : undefined,
               );
 
+              const Icon =
+                detail.key === "phone"
+                  ? Phone
+                  : detail.key === "email"
+                    ? Mail
+                    : detail.key === "location"
+                      ? MapPin
+                      : Clock;
+
               return (
                 <li
                   key={detail.key}
-                  className="font-mono text-[12px] text-[#5A6B80]"
+                  className="flex items-start gap-2.5 font-mono text-[12px] text-dimension"
                 >
-                  <span className="text-signal">{detail.label}:</span>{" "}
-                  {href ? (
-                    <a
-                      href={href}
-                      {...(href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                      className="text-[#8E9DB0] transition-colors hover:text-paper"
-                    >
-                      {detail.value}
-                    </a>
-                  ) : (
-                    <span className="text-[#8E9DB0]">{detail.value}</span>
-                  )}
+                  <Icon
+                    className="mt-0.5 h-4 w-4 shrink-0 text-signal"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    <span className="text-signal">{detail.label}:</span>{" "}
+                    {href ? (
+                      <a
+                        href={href}
+                        {...(href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="text-[#8E9DB0] transition-colors hover:text-paper"
+                      >
+                        {detail.value}
+                      </a>
+                    ) : (
+                      <span className="text-[#8E9DB0]">{detail.value}</span>
+                    )}
+                  </span>
                 </li>
               );
             })}
