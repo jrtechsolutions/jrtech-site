@@ -11,6 +11,10 @@ function hasAnalyticsConsent(): boolean {
   }
 }
 
+/**
+ * Garante gtag + dataLayer mesmo antes do script do GA terminar de carregar.
+ * Eventos ficam na fila do dataLayer (mesmo padrão do snippet oficial do Google).
+ */
 function getGtag(): GtagFn | undefined {
   if (typeof window === "undefined") return undefined;
 
@@ -19,19 +23,16 @@ function getGtag(): GtagFn | undefined {
     dataLayer?: object[];
   };
 
-  if (typeof w.gtag === "function") return w.gtag;
+  w.dataLayer = w.dataLayer || [];
 
-  // Recria o helper gtag no mesmo formato do snippet do Google
-  if (Array.isArray(w.dataLayer)) {
+  if (typeof w.gtag !== "function") {
     w.gtag = function gtag() {
-      // Precisa ser `arguments` (objeto Arguments), não um array
       // eslint-disable-next-line prefer-rest-params
       w.dataLayer!.push(arguments as unknown as object);
     };
-    return w.gtag;
   }
 
-  return undefined;
+  return w.gtag;
 }
 
 /** Dispara evento no GA4 apenas com consentimento de cookies. */
