@@ -47,6 +47,14 @@ export function Solucoes() {
           </SemanticCard>
         ))}
       </div>
+      <div className="mt-8">
+        <Link
+          href="/solucoes"
+          className="font-mono text-[12px] text-ink-2 underline-offset-2 transition-colors hover:text-ink hover:underline"
+        >
+          Ver todas as soluções →
+        </Link>
+      </div>
     </Section>
   );
 }

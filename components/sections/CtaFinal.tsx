@@ -15,7 +15,7 @@ import {
   contactSchema,
   type ContactFormData,
 } from "@/lib/validations/contact";
-import { trackGenerateLead } from "@/lib/analytics";
+import { trackGenerateLead, trackContactFormSubmit } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
 
@@ -56,8 +56,9 @@ export function CtaFinal() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    setStatus("idle");
+      setStatus("idle");
     try {
+      trackContactFormSubmit();
       const contactUrl =
         process.env.NEXT_PUBLIC_CONTACT_API_URL ?? "/api/contact.php";
 

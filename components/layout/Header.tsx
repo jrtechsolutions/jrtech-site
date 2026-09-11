@@ -3,19 +3,28 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu } from "lucide-react";
 import { nav } from "@/data/content";
 import { cn } from "@/lib/utils";
 import { usePrefersReducedMotion } from "@/lib/motion";
+import { trackVirtualPageView } from "@/lib/analytics";
 
-const SECTION_IDS = nav.links.map((l) => l.href.replace("#", ""));
+const HASH_SECTION_IDS = nav.links
+  .filter((l) => l.href.startsWith("#"))
+  .map((l) => l.href.slice(1));
 
 function scrollToHash(href: string) {
   const id = href.replace("#", "");
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
 }
 
 export function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
   const reduced = usePrefersReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [activeHref, setActiveHref] = useState<string | null>(null);
@@ -31,34 +40,61 @@ export function Header() {
   const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
-  const highlightHref = hoveredHref ?? activeHref;
+  const highlightHref =
+    hoveredHref ??
+    (pathname.startsWith("/solucoes") ? "/solucoes" : activeHref);
 
-  const movePill = useCallback(
-    (href: string | null) => {
-      const pill = pillRef.current;
-      const track = navRef.current;
-      if (!pill || !track) return;
-
-      if (!href) {
-        pill.style.opacity = "0";
+  const navigate = useCallback(
+    (href: string) => {
+      if (href.startsWith("#")) {
+        if (pathname !== "/") {
+          router.push(`/${href}`);
+          return;
+        }
+        scrollToHash(href);
+        const id = href.slice(1);
+        const titles: Record<string, string> = {
+          projetos: "Projetos — JR Technology Solutions",
+          sobre: "Sobre — JR Technology Solutions",
+          contato: "Contato — JR Technology Solutions",
+          solucoes: "Soluções — JR Technology Solutions",
+          faq: "Perguntas frequentes — JR Technology Solutions",
+        };
+        window.history.replaceState(null, "", href);
+        trackVirtualPageView(
+          `/${href}`,
+          titles[id] ?? "JR Technology Solutions",
+        );
         return;
       }
-
-      const target = linkRefs.current.get(href);
-      if (!target) {
-        pill.style.opacity = "0";
-        return;
-      }
-
-      const trackRect = track.getBoundingClientRect();
-      const targetRect = target.getBoundingClientRect();
-
-      pill.style.left = `${targetRect.left - trackRect.left}px`;
-      pill.style.width = `${targetRect.width}px`;
-      pill.style.opacity = "1";
+      router.push(href);
     },
-    [],
+    [pathname, router],
   );
+
+  const movePill = useCallback((href: string | null) => {
+    const pill = pillRef.current;
+    const track = navRef.current;
+    if (!pill || !track) return;
+
+    if (!href) {
+      pill.style.opacity = "0";
+      return;
+    }
+
+    const target = linkRefs.current.get(href);
+    if (!target) {
+      pill.style.opacity = "0";
+      return;
+    }
+
+    const trackRect = track.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    pill.style.left = `${targetRect.left - trackRect.left}px`;
+    pill.style.width = `${targetRect.width}px`;
+    pill.style.opacity = "1";
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -67,9 +103,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Scroll spy
   useEffect(() => {
-    const elements = SECTION_IDS.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    if (pathname !== "/") {
+      setActiveHref(null);
+      return;
+    }
+
+    const elements = HASH_SECTION_IDS.map((id) =>
+      document.getElementById(id),
+    ).filter(Boolean) as HTMLElement[];
     if (elements.length === 0) return;
 
     const ratios = new Map<string, number>();
@@ -83,7 +125,7 @@ export function Header() {
         let bestId: string | null = null;
         let bestRatio = 0;
 
-        for (const id of SECTION_IDS) {
+        for (const id of HASH_SECTION_IDS) {
           const ratio = ratios.get(id) ?? 0;
           if (ratio > bestRatio) {
             bestRatio = ratio;
@@ -107,9 +149,8 @@ export function Header() {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
-  // Reposiciona a pílula no highlight (hover tem prioridade sobre ativo)
   useEffect(() => {
     movePill(highlightHref);
   }, [highlightHref, movePill]);
@@ -120,7 +161,6 @@ export function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, [highlightHref, movePill]);
 
-  // Mobile dropdown: fecha no clique fora e Escape
   useEffect(() => {
     if (!mobileOpen) return;
 
@@ -144,13 +184,16 @@ export function Header() {
     document.addEventListener("mousedown", onPointerDown);
     document.addEventListener("touchstart", onPointerDown, { passive: true });
 
-    const t = window.setTimeout(() => firstItemRef.current?.focus(), reduced ? 0 : 60);
+    const t = window.setTimeout(
+      () => firstItemRef.current?.focus(),
+      reduced ? 0 : 60,
+    );
 
     return () => {
-      window.clearTimeout(t);
       window.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("mousedown", onPointerDown);
       document.removeEventListener("touchstart", onPointerDown);
+      window.clearTimeout(t);
     };
   }, [mobileOpen, reduced]);
 
@@ -158,7 +201,9 @@ export function Header() {
     <header
       className={cn(
         "sticky top-0 z-50 border-b border-border transition-[background-color,box-shadow,backdrop-filter] duration-200",
-        scrolled ? "bg-paper/95 shadow-sm backdrop-blur-md" : "bg-paper/80 backdrop-blur-sm",
+        scrolled
+          ? "bg-paper/90 shadow-sm backdrop-blur-md"
+          : "bg-paper/80 backdrop-blur-sm",
       )}
     >
       <div className="site-container grid grid-cols-[1fr_auto] items-center gap-3 py-[18px] lg:grid-cols-[1fr_auto_1fr]">
@@ -177,7 +222,6 @@ export function Header() {
           />
         </Link>
 
-        {/* Desktop — pílula centralizada na viewport */}
         <nav
           ref={navRef}
           className="relative hidden items-center gap-[2px] justify-self-center rounded-full border border-border bg-[#F4F7F9] p-1 lg:flex"
@@ -207,7 +251,7 @@ export function Header() {
                   else linkRefs.current.delete(item.href);
                 }}
                 type="button"
-                onClick={() => scrollToHash(item.href)}
+                onClick={() => navigate(item.href)}
                 onMouseEnter={() => setHoveredHref(item.href)}
                 onFocus={() => setHoveredHref(item.href)}
                 onBlur={(e) => {
@@ -215,7 +259,13 @@ export function Header() {
                     setHoveredHref(null);
                   }
                 }}
-                aria-current={activeHref === item.href ? "page" : undefined}
+                aria-current={
+                  (pathname.startsWith("/solucoes") &&
+                    item.href === "/solucoes") ||
+                  activeHref === item.href
+                    ? "page"
+                    : undefined
+                }
                 className={cn(
                   "relative z-[2] rounded-full px-4 py-2 text-[13px] font-medium font-body transition-colors duration-200",
                   "focus-visible:outline-none",
@@ -229,19 +279,18 @@ export function Header() {
         </nav>
 
         <div className="flex items-center justify-self-end gap-2">
-          {/* CTA desktop */}
           <button
             type="button"
-            onClick={() => scrollToHash("#contato")}
+            onClick={() => navigate("#contato")}
             className="btn-ruler hidden items-center justify-center rounded-md bg-ink px-[22px] py-[11px] text-[13.5px] font-medium text-paper transition-colors duration-150 hover:bg-ink/90 focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none lg:inline-flex"
             style={{
-              clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
+              clipPath:
+                "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
             }}
           >
             {nav.cta}
           </button>
 
-          {/* Mobile menu */}
           <div className="relative lg:hidden">
             <button
               ref={menuBtnRef}
@@ -264,7 +313,10 @@ export function Header() {
               >
                 <div className="flex flex-col gap-[2px]">
                   {nav.links.map((item, index) => {
-                    const isActive = activeHref === item.href;
+                    const isActive =
+                      (pathname.startsWith("/solucoes") &&
+                        item.href === "/solucoes") ||
+                      activeHref === item.href;
                     return (
                       <button
                         key={item.href}
@@ -274,7 +326,7 @@ export function Header() {
                         aria-current={isActive ? "page" : undefined}
                         onClick={() => {
                           setMobileOpen(false);
-                          scrollToHash(item.href);
+                          navigate(item.href);
                         }}
                         className={cn(
                           "rounded-lg px-4 py-2.5 text-left text-[13.5px] font-body transition-colors duration-150",
@@ -295,11 +347,12 @@ export function Header() {
                     role="menuitem"
                     onClick={() => {
                       setMobileOpen(false);
-                      scrollToHash("#contato");
+                      navigate("#contato");
                     }}
                     className="btn-ruler inline-flex w-full items-center justify-center rounded-md bg-ink px-4 py-3 text-[13.5px] font-medium text-paper transition-colors duration-150 hover:bg-ink/90 focus-visible:outline-none"
                     style={{
-                      clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
+                      clipPath:
+                        "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)",
                     }}
                   >
                     {nav.cta}

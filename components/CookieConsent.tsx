@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { trackCookieAccepted } from "@/lib/analytics";
 
 const CONSENT_KEY = "cookie_consent";
 const GA_ID = "G-228MTHS53C";
@@ -24,6 +25,10 @@ export function CookieConsent() {
   const save = (value: "accepted" | "declined") => {
     localStorage.setItem(CONSENT_KEY, value);
     setConsent(value);
+    if (value === "accepted") {
+      // Espera o <GoogleAnalytics /> montar e o gtag carregar
+      window.setTimeout(() => trackCookieAccepted(), 1500);
+    }
   };
 
   return (

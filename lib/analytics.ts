@@ -1,4 +1,5 @@
 const CONSENT_KEY = "cookie_consent";
+const GA_ID = "G-228MTHS53C";
 
 type GtagFn = (...args: unknown[]) => void;
 
@@ -11,13 +12,7 @@ function hasAnalyticsConsent(): boolean {
   }
 }
 
-/**
- * Garante gtag + dataLayer mesmo antes do script do GA terminar de carregar.
- * Eventos ficam na fila do dataLayer (mesmo padrão do snippet oficial do Google).
- */
-function getGtag(): GtagFn | undefined {
-  if (typeof window === "undefined") return undefined;
-
+function ensureGtag(): GtagFn {
   const w = window as Window & {
     gtag?: GtagFn;
     dataLayer?: object[];
@@ -42,10 +37,20 @@ export function trackEvent(
 ): void {
   if (!hasAnalyticsConsent()) return;
 
-  const gtag = getGtag();
-  if (!gtag) return;
+  const gtag = ensureGtag();
+  const payload = { ...(params ?? {}), send_to: GA_ID };
+  gtag("event", name, payload);
 
-  gtag("event", name, params ?? {});
+  // Se o script do GA ainda não montou, reenvia 1x após o load
+  const gaScript = document.querySelector(
+    'script[src*="googletagmanager.com/gtag/js"]',
+  );
+  if (!gaScript) {
+    window.setTimeout(() => {
+      if (!hasAnalyticsConsent()) return;
+      ensureGtag()("event", name, payload);
+    }, 1200);
+  }
 }
 
 export function trackWhatsAppClick(location: string): void {
@@ -55,3 +60,32 @@ export function trackWhatsAppClick(location: string): void {
 export function trackGenerateLead(method: string = "contact_form"): void {
   trackEvent("generate_lead", { method });
 }
+
+export function trackCookieAccepted(): void {
+  trackEvent("cookie_accepted");
+}
+
+export function trackContactFormSubmit(): void {
+  trackEvent("contact_form_submit");
+}
+
+/** Conta seção da home como “página” no GA4 (page_path virtual). */
+export function trackVirtualPageView(path: string, title: string): void {
+  if (!hasAnalyticsConsent()) return;
+
+  const origin = window.location.origin;
+  const location = `${origin}${path === "/" ? "/" : path}`;
+
+  ensureGtag()("event", "page_view", {
+    page_path: path,
+    page_title: title,
+    page_location: location,
+    send_to: GA_ID,
+  });
+
+  trackEvent("section_view", {
+    section_path: path,
+    section_title: title,
+  });
+}
+

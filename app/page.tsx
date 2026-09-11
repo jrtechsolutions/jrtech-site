@@ -9,10 +9,12 @@ import { Sobre } from "@/components/sections/Sobre";
 import { Faq } from "@/components/sections/Faq";
 import { CtaFinal } from "@/components/sections/CtaFinal";
 import { FaqStructuredData } from "@/components/FaqStructuredData";
+import { SectionTracker } from "@/components/analytics/SectionTracker";
 
 export default function HomePage() {
   return (
     <>
+      <SectionTracker />
       <FaqStructuredData />
       <Hero />
       <Problema />
