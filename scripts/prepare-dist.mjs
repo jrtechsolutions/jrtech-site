@@ -8,6 +8,14 @@ const apiDir = join(root, "api");
 
 const SITE_URL = "https://www.jrtechnologysolutions.com.br";
 
+const SERVICE_SLUGS = [
+  "infraestrutura",
+  "seguranca",
+  "desenvolvimento",
+  "governanca",
+  "suporte-gestao-ti",
+];
+
 if (!existsSync(outDir)) {
   console.error("Pasta out/ não encontrada. Rode `next build` antes.");
   process.exit(1);
@@ -22,14 +30,24 @@ cpSync(apiDir, join(distDir, "api"), { recursive: true });
 
 const today = new Date().toISOString().split("T")[0];
 
+const serviceUrls = SERVICE_SLUGS.map(
+  (slug) => `  <url>
+    <loc>${SITE_URL}/solucoes/${slug}/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`,
+).join("\n");
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${SITE_URL}/</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+${serviceUrls}
   <url>
     <loc>${SITE_URL}/politica-de-privacidade/</loc>
     <lastmod>${today}</lastmod>

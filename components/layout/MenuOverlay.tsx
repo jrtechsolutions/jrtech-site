@@ -5,6 +5,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { nav, site } from "@/data/content";
+import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
 import { EASE_SNAP, usePrefersReducedMotion } from "@/lib/motion";
 
 const MENU_LINKS = nav.links.map((link, index) => ({
@@ -163,14 +164,13 @@ export function MenuOverlay({ open, onClose }: MenuOverlayProps) {
           </nav>
 
           <div className="mt-10 flex flex-col gap-3 font-mono text-[11px] text-dimension sm:flex-row sm:gap-10">
-            <a
+            <TrackedWhatsAppLink
               href={`https://wa.me/${site.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
+              location="menu_overlay"
               className="transition-colors hover:text-paper"
             >
               {site.phoneDisplay}
-            </a>
+            </TrackedWhatsAppLink>
             <a
               href={`mailto:${site.email}`}
               className="transition-colors hover:text-paper"

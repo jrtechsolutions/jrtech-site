@@ -5,6 +5,13 @@
 JR Technology Solutions é uma consultoria técnica de TI operada por Paulo Júnior, atendendo empresas de pequeno e médio porte em São Paulo com diagnóstico, implementação e acompanhamento contínuo — sem intermediários entre o cliente e quem executa o trabalho.
 
 ## Serviços
+- Infraestrutura e Cloud: https://www.jrtechnologysolutions.com.br/solucoes/infraestrutura/
+- Segurança da Informação: https://www.jrtechnologysolutions.com.br/solucoes/seguranca/
+- Desenvolvimento: https://www.jrtechnologysolutions.com.br/solucoes/desenvolvimento/
+- Governança de Tecnologia: https://www.jrtechnologysolutions.com.br/solucoes/governanca/
+- Suporte e Gestão de TI: https://www.jrtechnologysolutions.com.br/solucoes/suporte-gestao-ti/
+
+Resumo dos serviços:
 - Infraestrutura e Cloud: servidores, redes, ambientes cloud (AWS/Azure/GCP), monitoramento e backups
 - Segurança da Informação: controle de acesso, proteção de dados, boas práticas e hardening
 - Desenvolvimento: sistemas web sob medida, e-commerce, APIs e integrações

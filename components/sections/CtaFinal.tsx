@@ -15,7 +15,9 @@ import {
   contactSchema,
   type ContactFormData,
 } from "@/lib/validations/contact";
+import { trackGenerateLead } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { TrackedWhatsAppLink } from "@/components/analytics/TrackedWhatsAppLink";
 
 const fieldClass =
   "mt-1.5 h-9 rounded-[3px] border-[#2C3E56] bg-[#121E30] text-sm text-paper placeholder:text-[#4A5A72] focus-visible:border-signal focus-visible:ring-signal/30";
@@ -81,6 +83,7 @@ export function CtaFinal() {
         throw new Error(payload?.message ?? "Request failed");
       }
 
+      trackGenerateLead("contact_form");
       setStatus("success");
       reset();
     } catch {
@@ -109,15 +112,14 @@ export function CtaFinal() {
             {ctaFinal.text}
           </p>
 
-          <a
+          <TrackedWhatsAppLink
             href={`https://wa.me/${site.whatsapp}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            location="cta_final"
             className="btn-ruler mb-8 inline-flex items-center gap-3 rounded-[3px] bg-signal px-8 py-4 text-[15px] font-medium text-ink hover:bg-signal/90"
           >
             <WhatsAppIcon />
             {ctaFinal.whatsappCta}
-          </a>
+          </TrackedWhatsAppLink>
 
           <ul className="space-y-3">
             {ctaFinal.details.map((detail) => {
@@ -148,15 +150,22 @@ export function CtaFinal() {
                   <span>
                     <span className="text-signal">{detail.label}:</span>{" "}
                     {href ? (
-                      <a
-                        href={href}
-                        {...(href.startsWith("http")
-                          ? { target: "_blank", rel: "noopener noreferrer" }
-                          : {})}
-                        className="text-[#8E9DB0] transition-colors hover:text-paper"
-                      >
-                        {detail.value}
-                      </a>
+                      detail.key === "phone" ? (
+                        <TrackedWhatsAppLink
+                          href={href}
+                          location="contact_phone"
+                          className="text-[#8E9DB0] transition-colors hover:text-paper"
+                        >
+                          {detail.value}
+                        </TrackedWhatsAppLink>
+                      ) : (
+                        <a
+                          href={href}
+                          className="text-[#8E9DB0] transition-colors hover:text-paper"
+                        >
+                          {detail.value}
+                        </a>
+                      )
                     ) : (
                       <span className="text-[#8E9DB0]">{detail.value}</span>
                     )}

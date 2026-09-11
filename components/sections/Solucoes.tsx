@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { solucoes } from "@/data/content";
 import { Kicker } from "@/components/ui/Kicker";
 import { Section } from "@/components/ui/Section";
@@ -37,6 +38,12 @@ export function Solucoes() {
                 </span>
               ))}
             </div>
+            <Link
+              href={item.href}
+              className="mt-4 inline-block font-mono text-[11px] text-signal no-underline hover:underline"
+            >
+              Saiba mais →
+            </Link>
           </SemanticCard>
         ))}
       </div>

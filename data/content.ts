@@ -78,6 +78,7 @@ export const solucoes = {
         "backups",
       ],
       hover: "uptime" as const,
+      href: "/solucoes/infraestrutura",
     },
     {
       tag: "S.02",
@@ -85,6 +86,7 @@ export const solucoes = {
       description: "Sua tecnologia funcionando sem improvisos.",
       includes: ["suporte", "manutenção", "acompanhamento", "melhorias"],
       hover: "response" as const,
+      href: "/solucoes/suporte-gestao-ti",
     },
     {
       tag: "S.03",
@@ -97,6 +99,7 @@ export const solucoes = {
         "segurança preventiva",
       ],
       hover: "scan" as const,
+      href: "/solucoes/seguranca",
     },
     {
       tag: "S.04",
@@ -104,6 +107,7 @@ export const solucoes = {
       description: "Tecnologia organizada para crescer.",
       includes: ["documentação", "processos", "planejamento", "gestão"],
       hover: "processes" as const,
+      href: "/solucoes/governanca",
     },
     {
       tag: "S.05",
@@ -111,6 +115,7 @@ export const solucoes = {
       description: "Soluções digitais sob medida.",
       includes: ["sites", "sistemas", "integrações", "automações"],
       hover: "build" as const,
+      href: "/solucoes/desenvolvimento",
     },
   ],
 } as const;
