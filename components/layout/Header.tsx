@@ -40,9 +40,15 @@ export function Header() {
   const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
 
-  const highlightHref =
-    hoveredHref ??
-    (pathname.startsWith("/solucoes") ? "/solucoes" : activeHref);
+  const pathHighlight = pathname.startsWith("/solucoes")
+    ? "/solucoes"
+    : pathname.startsWith("/projetos")
+      ? "/projetos"
+      : pathname.startsWith("/sobre")
+        ? "/sobre"
+        : null;
+
+  const highlightHref = hoveredHref ?? pathHighlight ?? activeHref;
 
   const navigate = useCallback(
     (href: string) => {
@@ -260,8 +266,7 @@ export function Header() {
                   }
                 }}
                 aria-current={
-                  (pathname.startsWith("/solucoes") &&
-                    item.href === "/solucoes") ||
+                  (pathHighlight !== null && item.href === pathHighlight) ||
                   activeHref === item.href
                     ? "page"
                     : undefined
@@ -314,8 +319,7 @@ export function Header() {
                 <div className="flex flex-col gap-[2px]">
                   {nav.links.map((item, index) => {
                     const isActive =
-                      (pathname.startsWith("/solucoes") &&
-                        item.href === "/solucoes") ||
+                      (pathHighlight !== null && item.href === pathHighlight) ||
                       activeHref === item.href;
                     return (
                       <button

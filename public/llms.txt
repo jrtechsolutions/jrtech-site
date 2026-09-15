@@ -2,28 +2,23 @@
 
 > Consultoria e implementação de TI para pequenas e médias empresas em São Paulo — infraestrutura, segurança da informação, desenvolvimento de sistemas e governança de tecnologia.
 
-JR Technology Solutions é uma consultoria técnica de TI operada por Paulo Júnior, atendendo empresas de pequeno e médio porte em São Paulo com diagnóstico, implementação e acompanhamento contínuo — sem intermediários entre o cliente e quem executa o trabalho.
+JR Technology Solutions é uma consultoria técnica de TI atendendo empresas de pequeno e médio porte em São Paulo com diagnóstico, implementação e acompanhamento contínuo — sem intermediários entre o cliente e quem executa o trabalho.
 
-## Serviços
-- Infraestrutura e Cloud: https://www.jrtechnologysolutions.com.br/solucoes/infraestrutura/
-- Segurança da Informação: https://www.jrtechnologysolutions.com.br/solucoes/seguranca/
-- Desenvolvimento: https://www.jrtechnologysolutions.com.br/solucoes/desenvolvimento/
-- Governança de Tecnologia: https://www.jrtechnologysolutions.com.br/solucoes/governanca/
-- Suporte e Gestão de TI: https://www.jrtechnologysolutions.com.br/solucoes/suporte-gestao-ti/
+## Páginas do site
 
-Resumo dos serviços:
-- Infraestrutura e Cloud: servidores, redes, ambientes cloud (AWS/Azure/GCP), monitoramento e backups
-- Segurança da Informação: controle de acesso, proteção de dados, boas práticas e hardening
-- Desenvolvimento: sistemas web sob medida, e-commerce, APIs e integrações
-- Governança de Tecnologia: documentação, processos e planejamento
-- Suporte e Gestão de TI: manutenção e acompanhamento contínuo
+- / — Página inicial, visão geral de todos os serviços
+- /solucoes — Hub com as 5 áreas de atuação
+- /solucoes/infraestrutura — Infraestrutura e Cloud
+- /solucoes/seguranca — Segurança da Informação
+- /solucoes/desenvolvimento — Desenvolvimento de sistemas e integrações
+- /solucoes/governanca — Governança de Tecnologia
+- /solucoes/suporte-gestao-ti — Suporte e Gestão de TI
+- /projetos — Projetos reais desenvolvidos (Fatia de Lei, Adega do Kinho, Pratoo)
+- /sobre — Sobre a empresa e o fundador
+- /politica-de-privacidade — Política de privacidade (LGPD)
 
 ## Diferencial
-Atendimento direto com o responsável técnico — sem terceirização do atendimento. Diagnóstico realizado antes de qualquer proposta.
-
-## Projetos
-- Fatia de Lei (fatiadelei.com.br): e-commerce completo com painel administrativo e pagamento via API PicPay
-- Ambiente de monitoramento interno: Grafana + Prometheus, métricas em tempo real
+Atendimento direto com o responsável técnico, sem terceirização do atendimento. Diagnóstico realizado antes de qualquer proposta.
 
 ## Contato
 - WhatsApp/telefone: (11) 97380-2744

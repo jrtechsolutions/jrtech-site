@@ -14,8 +14,8 @@ export const site = {
 export const nav = {
   links: [
     { label: "Soluções", href: "/solucoes" },
-    { label: "Projetos", href: "#projetos" },
-    { label: "Sobre", href: "#sobre" },
+    { label: "Projetos", href: "/projetos" },
+    { label: "Sobre", href: "/sobre" },
     { label: "Contato", href: "#contato" },
   ],
   cta: "Solicitar diagnóstico",
@@ -152,15 +152,33 @@ export const projetos = {
   title: "Projetos desenvolvidos",
   items: [
     {
-      type: "pattern" as const,
-      thumbLabel: "fatiadelei.com.br",
-      category: "Desenvolvimento",
+      type: "image" as const,
+      image: "/projeto-fatia-de-lei.png",
+      imageAlt: "Captura da página inicial do e-commerce Fatia de Lei",
+      objectPosition: "object-top" as const,
+      fit: "object-cover" as const,
+      category: "E-commerce",
       title: "Fatia de Lei",
       description:
-        "E-commerce completo para loja de doces, com catálogo de produtos, painel administrativo para gestão de receitas e estoque, e pagamento integrado via API do PicPay. Desenvolvido do zero, do frontend ao backend.",
+        "E-commerce completo para confeitaria, com catálogo, pedidos com prazo definido e pagamento integrado via InfinityPay.",
       link: {
-        href: "https://fatiadelei.com.br",
+        href: "https://www.fatiadelei.com.br",
         label: "↗ fatiadelei.com.br",
+      },
+    },
+    {
+      type: "image" as const,
+      image: "/projeto-adega-do-kinho.png",
+      imageAlt: "Captura da página inicial do e-commerce Adega do Kinho",
+      objectPosition: "object-top" as const,
+      fit: "object-cover" as const,
+      category: "E-commerce + PDV",
+      title: "Adega do Kinho",
+      description:
+        "Loja de bebidas com venda online, PDV presencial e estoque unificado entre os canais.",
+      link: {
+        href: "https://www.adegadokinho.com.br",
+        label: "↗ adegadokinho.com.br",
       },
     },
     {
@@ -173,7 +191,7 @@ export const projetos = {
       category: "Infraestrutura",
       title: "Ambiente de monitoramento",
       description:
-        "Ambiente de monitoramento interno com Grafana + Prometheus — métricas de CPU, memória, disco e rede em tempo real, com alertas automáticos configurados via Docker.",
+        "Ambiente de monitoramento interno com Grafana + Prometheus — métricas em tempo real e alertas automáticos.",
     },
   ],
 } as const;

@@ -1,0 +1,20 @@
+[
+  {
+    "idx": 1,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": "s da própria página), e um bloco de \"prova real\" com o print do Grafana em vez de ilustração abstrata.</p> </div> <div class=\"site\"> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"> <a href=\"#\"><span class=\"n\">01</span>Soluções</a> <a href=\""
+  },
+  {
+    "idx": 2,
+    "mime": "image/jpeg",
+    "bytes": 44043,
+    "kb": 43,
+    "mb": 0.04,
+    "contextBefore": "R</h2> <p>Este é o painel de monitoramento que usamos internamente — o mesmo tipo de visibilidade que aplicamos nos ambientes dos clientes.</p> <div class=\"proof-block\"> <img src=\"",
+    "contextAfter": "\" alt=\"Painel Grafana de monitoramento real da JR Technology Solutions\"> <div class=\"cap\">Grafana + "
+  }
+]

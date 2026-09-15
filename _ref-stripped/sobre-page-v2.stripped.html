@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre — página completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700&family=Archivo:wght@600&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#EEF2F5; font-family:'Public Sans',sans-serif; }
+
+.nav { display:flex; align-items:center; justify-content:space-between; padding:24px 64px; }
+.nav .brand img { height:26px; }
+.nav-pill { display:flex; align-items:center; background:#fff; border:1px solid #D4DCE3; border-radius:6px; padding:5px; gap:2px; }
+.nav-pill a { font-family:'Public Sans',sans-serif; font-size:13.5px; color:#3D4E63; text-decoration:none; padding:9px 16px; border-radius:4px; display:flex; gap:6px; }
+.nav-pill a.active { background:#16253D; color:#EEF2F5; }
+.nav .cta { background:#16253D; color:#EEF2F5; padding:11px 22px; font-size:13.5px; font-weight:500; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.kicker { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px; display:block; }
+
+.photo-hero { position:relative; height:520px; overflow:hidden; margin-bottom:72px; }
+.photo-hero img.bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:30% 20%; }
+.photo-hero .overlay { position:absolute; inset:0; background: linear-gradient(90deg, rgba(13,21,32,0) 0%, rgba(13,21,32,0.4) 42%, rgba(13,21,32,0.88) 62%, rgba(13,21,32,0.97) 100%); }
+.photo-hero .content { position:absolute; top:0; right:0; bottom:0; display:flex; flex-direction:column; justify-content:center; padding:0 64px; max-width:520px; }
+.photo-hero .kicker { color:#F5A25C; }
+.photo-hero h1 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:30px; line-height:1.2; color:#EEF2F5; margin-bottom:14px; }
+.photo-hero p { font-size:14.5px; line-height:1.65; color:#C7D0DC; }
+
+.section { padding:0 64px 72px; max-width:760px; }
+.section h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:24px; color:#16253D; margin-bottom:20px; }
+.section p { font-size:14.5px; line-height:1.75; color:#3D4E63; margin-bottom:14px; }
+
+/* JORNADA — timeline vertical (referência 21st.dev) */
+.journey-section { padding:0 64px 72px; max-width:680px; }
+.journey-section h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:24px; color:#16253D; margin-bottom:32px; }
+.journey-item { display:flex; gap:24px; position:relative; padding-bottom:36px; }
+.journey-item:last-child { padding-bottom:0; }
+.journey-item::before { content:''; position:absolute; left:17px; top:36px; bottom:0; width:1.5px; background:#D4DCE3; border-left:1.5px dashed #D4DCE3; }
+.journey-item:last-child::before { display:none; }
+.journey-node { width:36px; height:36px; border-radius:50%; background:#fff; border:1.5px solid #16253D; color:#16253D; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; flex-shrink:0; z-index:1; }
+.journey-card { background:#fff; border:1px solid #D4DCE3; border-radius:8px; padding:18px 20px; flex:1; }
+.journey-card h4 { font-family:'Archivo',sans-serif; font-weight:600; font-size:14.5px; color:#16253D; margin-bottom:6px; }
+.journey-card p { font-size:13.5px; color:#5A6B80; line-height:1.6; }
+
+/* COMO PENSAMOS */
+.principles { display:flex; flex-direction:column; max-width:760px; padding:0 64px 72px; }
+.principles h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:24px; color:#16253D; margin-bottom:24px; }
+.principle-item { display:flex; gap:20px; padding:20px 0; border-bottom:1px solid #D4DCE3; }
+.principle-item:first-of-type { border-top:1px solid #D4DCE3; }
+.principle-item .num { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; flex-shrink:0; width:24px; padding-top:2px; }
+.principle-item h4 { font-family:'Archivo',sans-serif; font-weight:600; font-size:14.5px; color:#16253D; margin-bottom:6px; }
+.principle-item p { font-size:13.5px; color:#5A6B80; line-height:1.6; }
+
+/* FORMAÇÃO */
+.formacao-section { padding:0 64px 72px; max-width:760px; }
+.formacao-section h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:24px; color:#16253D; margin-bottom:20px; }
+.formacao-list { display:flex; flex-direction:column; gap:0; margin-bottom:20px; }
+.formacao-item { display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid #D4DCE3; align-items:baseline; }
+.formacao-item:first-child { border-top:1px solid #D4DCE3; }
+.formacao-item .curso { font-family:'Archivo',sans-serif; font-weight:600; font-size:14px; color:#16253D; }
+.formacao-item .inst { font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#8AA0B8; }
+.formacao-section p.exp { font-size:13.5px; line-height:1.7; color:#5A6B80; }
+
+/* NÚMEROS */
+.stats-section { background:#16253D; padding:40px 64px; display:flex; gap:0; margin-bottom:72px; flex-wrap:wrap; }
+.stat { padding-right:32px; margin-right:32px; border-right:1px solid #2C3E56; }
+.stat:last-child { border:none; margin:0; padding:0; }
+.stat .num { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:26px; color:#EEF2F5; }
+.stat .desc { font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8E9DB0; margin-top:6px; }
+
+/* PARA QUEM FAZEMOS */
+.audience-section { padding:0 64px 72px; max-width:760px; }
+.audience-section h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:24px; color:#16253D; margin-bottom:8px; }
+.audience-section .lede { font-size:14.5px; color:#3D4E63; margin-bottom:24px; }
+.audience-list { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
+.audience-list .item { display:flex; align-items:center; gap:10px; font-size:14px; color:#16253D; }
+.audience-list .item .mark { color:#E8720C; font-family:'IBM Plex Mono',monospace; }
+.audience-section .closing { font-family:'Archivo',sans-serif; font-weight:600; font-size:16px; color:#16253D; }
+
+/* PROJETOS LINK */
+.projetos-link-section { padding:0 64px 72px; max-width:760px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+.projetos-link-section p { font-size:14.5px; color:#3D4E63; }
+.projetos-link-section a.link-btn { font-family:'IBM Plex Mono',monospace; font-size:13px; color:#E8720C; text-decoration:none; white-space:nowrap; }
+
+/* CTA FINAL */
+.cta-final { background:#16253D; padding:56px 64px; text-align:center; }
+.cta-final h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:26px; color:#EEF2F5; margin-bottom:8px; }
+.cta-final .sub { font-size:15px; color:#8E9DB0; margin-bottom:28px; max-width:520px; margin-left:auto; margin-right:auto; }
+.cta-final .btns { display:flex; gap:14px; justify-content:center; }
+.btn-primary { background:#E8720C; color:#16253D; padding:14px 28px; font-size:14.5px; font-weight:600; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.btn-outline { background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.3); color:#EEF2F5; padding:13px 28px; font-size:14.5px; font-weight:500; text-decoration:none; }
+
+@media (max-width: 760px) {
+  .nav { padding:18px 24px; }
+  .nav-pill { display:none; }
+  .section, .principles, .formacao-section, .stats-section, .audience-section, .projetos-link-section, .cta-final { padding-left:24px; padding-right:24px; }
+  .photo-hero { height:600px; }
+  .photo-hero img.bg { object-position:center 15%; }
+  .photo-hero .overlay { background: linear-gradient(0deg, rgba(13,21,32,0.98) 0%, rgba(13,21,32,0.92) 42%, rgba(13,21,32,0.3) 68%, rgba(13,21,32,0) 85%); }
+  .photo-hero .content { top:auto; left:0; right:0; bottom:0; justify-content:flex-end; max-width:none; padding:0 24px 32px; }
+  .stats-section { flex-direction:column; gap:20px; }
+  .stat { border:none; margin:0; padding:0; }
+  .formacao-item { flex-direction:column; gap:2px; }
+  .projetos-link-section { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand"><img src="[DATA_IMAGE:image/png:138KB]" alt="JR"></div>
+    <div class="nav-pill"><a href="#">Soluções</a><a href="#">Projetos</a><a href="#" class="active">Sobre</a><a href="#">Contato</a></div>
+    <a class="cta" href="#">Solicitar diagnóstico</a>
+  </div>
+
+  <div class="photo-hero">
+    <img class="bg" src="[DATA_IMAGE:image/png:1993KB]" alt="Fundador da JR Technology Solutions em ambiente de escritório">
+    <div class="overlay"></div>
+    <div class="content">
+      <span class="kicker">Sobre</span>
+      <h1>Tecnologia não precisa ser complicada. Precisa funcionar.</h1>
+      <p>A JR Technology Solutions ajuda empresas a estruturar, proteger, desenvolver e evoluir sua tecnologia, conectando infraestrutura, segurança, sistemas, automação e gestão de TI.</p>
+    </div>
+  </div>
+
+  <div class="journey-section">
+    <h2>Como começou</h2>
+    <div class="journey-item">
+      <div class="journey-node">01</div>
+      <div class="journey-card"><h4>O anúncio</h4><p>Uma pastelaria procurava alguém pra estruturar a rede e conectar as impressoras ao sistema de pedidos.</p></div>
+    </div>
+    <div class="journey-item">
+      <div class="journey-node">02</div>
+      <div class="journey-card"><h4>A virada</h4><p>Aquele serviço específico não se concretizou, mas abriu os olhos para algo maior: um mercado real, mal atendido, bem diante de mim.</p></div>
+    </div>
+    <div class="journey-item">
+      <div class="journey-node">03</div>
+      <div class="journey-card"><h4>A decisão</h4><p>Com a experiência que eu já tinha em infraestrutura, ficou claro que dava pra ir além de rede e impressora. Segurança, desenvolvimento, suporte contínuo. Foi daí que nasceu a JR Technology Solutions.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Quem está por trás</h2>
+    <p>Quem atende você é quem executa. Não existe vendedor te passando pra um técnico depois.</p>
+    <p>Além dos clientes da consultoria, também atuo como analista de infraestrutura em outra operação. Isso significa que o que eu recomendo pros meus clientes é testado na prática, no dia a dia de quem lida com ambiente de produção real, não só em teoria.</p>
+  </div>
+
+  <div class="principles">
+    <h2>Como pensamos</h2>
+    <div class="principle-item"><div class="num">01</div><div><h4>Entender antes de implementar</h4><p>Não começamos oferecendo tecnologia. Primeiro entendemos o problema.</p></div></div><div class="principle-item"><div class="num">02</div><div><h4>Segurança desde o início</h4><p>Segurança não deve ser um remendo colocado depois.</p></div></div><div class="principle-item"><div class="num">03</div><div><h4>Tecnologia precisa gerar resultado</h4><p>Uma solução tecnicamente excelente que não resolve o problema do negócio não é uma boa solução.</p></div></div><div class="principle-item"><div class="num">04</div><div><h4>Tudo precisa ser sustentável</h4><p>Documentação, organização e processos são tão importantes quanto a tecnologia.</p></div></div><div class="principle-item"><div class="num">05</div><div><h4>Transparência</h4><p>O cliente precisa entender o que está sendo feito, por que, e qual resultado esperar.</p></div></div>
+  </div>
+
+  <div class="formacao-section">
+    <h2>Formação</h2>
+    <div class="formacao-list"><div class="formacao-item"><span class="curso">Técnico em Redes</span><span class="inst">SENAI</span></div><div class="formacao-item"><span class="curso">Ciência da Computação</span><span class="inst">UNIP</span></div><div class="formacao-item"><span class="curso">Pós-graduação em Segurança da Informação</span><span class="inst">SENAC</span></div><div class="formacao-item"><span class="curso">MBA em Gestão de Tecnologia da Informação</span><span class="inst">FIAP</span></div></div>
+    <p class="exp">Experiência profissional em infraestrutura, redes e suporte corporativo, com atuação também em segurança, sistemas e tecnologia aplicada aos negócios.</p>
+  </div>
+
+  <div class="stats-section">
+    <div class="stat"><div class="num">+1 ano</div><div class="desc">de operação</div></div>
+    <div class="stat"><div class="num">100%</div><div class="desc">atendimento direto</div></div>
+    <div class="stat"><div class="num">0</div><div class="desc">terceirizações</div></div>
+    <div class="stat"><div class="num">3</div><div class="desc">sistemas em produção</div></div>
+  </div>
+
+  <div class="audience-section">
+    <h2>Para quem fazemos</h2>
+    <p class="lede">Empresas que precisam organizar sua tecnologia para crescer.</p>
+    <div class="audience-list"><div class="item"><span class="mark">＋</span>Empresas de serviços</div><div class="item"><span class="mark">＋</span>Pequenas e médias empresas</div><div class="item"><span class="mark">＋</span>Negócios em crescimento</div><div class="item"><span class="mark">＋</span>Empresas com processos manuais</div><div class="item"><span class="mark">＋</span>Empresas sem uma estrutura interna de TI</div><div class="item"><span class="mark">＋</span>Empresas que precisam profissionalizar sua infraestrutura</div></div>
+    <p class="closing">Se a tecnologia da sua empresa cresceu sem planejamento, nós podemos ajudar a colocar essa estrutura no lugar.</p>
+  </div>
+
+  <div class="projetos-link-section">
+    <p>Quer ver isso funcionando na prática? Temos sistemas reais em produção, atendendo clientes de verdade.</p>
+    <a class="link-btn" href="#">Ver projetos ↗</a>
+  </div>
+
+  <div class="cta-final">
+    <h2>Sua empresa não precisa de mais tecnologia.</h2>
+    <p class="sub">Precisa da tecnologia certa. Vamos entender onde sua empresa está, identificar o que precisa ser melhorado e construir o próximo passo.</p>
+    <div class="btns">
+      <a class="btn-primary" href="#">Falar com a JR Tech</a>
+      <a class="btn-outline" href="#">Falar no WhatsApp</a>
+    </div>
+  </div>
+</body>
+</html>

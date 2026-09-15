@@ -1,0 +1,38 @@
+[
+  {
+    "idx": 1,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": "are-col.before { border-right:none; border-bottom:1px solid #D4DCE3; } .compare-col { padding:26px 22px; } } </style> </head> <body> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"><a href=\"#\"><span class=\"n\">01</span>Soluções</a><a href=\"#\""
+  },
+  {
+    "idx": 2,
+    "mime": "image/png",
+    "bytes": 2519844,
+    "kb": 2461,
+    "mb": 2.4,
+    "contextBefore": "\"n\">03</span>Sobre</a><a href=\"#\"><span class=\"n\">04</span>Contato</a></div> <a class=\"cta\" href=\"#\">Solicitar diagnóstico</a> </div> <div class=\"photo-hero\"> <img class=\"bg\" src=\"",
+    "contextAfter": "\" alt=\"Especialista JR desenvolvendo sistemas web, APIs e automações\"> <div class=\"overlay\"></div> <"
+  },
+  {
+    "idx": 3,
+    "mime": "image/jpeg",
+    "bytes": 44043,
+    "kb": 43,
+    "mb": 0.04,
+    "contextBefore": "mini-browser\"><div class=\"bar\"><div class=\"dot\"></div><div class=\"dot\"></div><div class=\"dot\"></div><span class=\"url\">monitoramento interno</span></div><div class=\"shot\"><img src=\"",
+    "contextAfter": "\"></div><div class=\"cap\"><span class=\"cat\">Infraestrutura</span><h4>Ambiente de monitoramento</h4></"
+  },
+  {
+    "idx": 4,
+    "mime": "image/jpeg",
+    "bytes": 44043,
+    "kb": 43,
+    "mb": 0.04,
+    "contextBefore": "mini-browser\"><div class=\"bar\"><div class=\"dot\"></div><div class=\"dot\"></div><div class=\"dot\"></div><span class=\"url\">monitoramento interno</span></div><div class=\"shot\"><img src=\"",
+    "contextAfter": "\"></div><div class=\"cap\"><span class=\"cat\">Infraestrutura</span><h4>Ambiente de monitoramento</h4></"
+  }
+]

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segurança da Informação — página completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700&family=Archivo:wght@600&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#EEF2F5; font-family:'Public Sans',sans-serif; }
+
+.nav { display:flex; align-items:center; justify-content:space-between; padding:24px 64px; }
+.nav .brand img { height:26px; }
+.nav-pill { display:flex; align-items:center; background:#fff; border:1px solid #D4DCE3; border-radius:6px; padding:5px; gap:2px; }
+.nav-pill a { font-family:'Public Sans',sans-serif; font-size:13.5px; color:#3D4E63; text-decoration:none; padding:9px 16px; border-radius:4px; display:flex; gap:6px; }
+.nav-pill a .n { font-family:'IBM Plex Mono',monospace; font-size:9.5px; opacity:0.6; }
+.nav .cta { background:#16253D; color:#EEF2F5; padding:11px 22px; font-size:13.5px; font-weight:500; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.kicker { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px; display:block; }
+
+/* HERO com imagem de fundo (mesmo padrão da Infraestrutura) */
+.photo-hero { position:relative; height:520px; overflow:hidden; margin-bottom:64px; }
+.photo-hero img.bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:18% 25%; }
+.photo-hero .overlay { position:absolute; inset:0; background: linear-gradient(90deg, rgba(13,21,32,0) 0%, rgba(13,21,32,0.35) 38%, rgba(13,21,32,0.85) 58%, rgba(13,21,32,0.97) 100%); }
+.photo-hero .content { position:absolute; top:0; right:0; bottom:0; display:flex; flex-direction:column; justify-content:center; padding:0 64px; max-width:520px; }
+.photo-hero .kicker { color:#F5A25C; }
+.photo-hero h1 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:32px; line-height:1.18; color:#EEF2F5; margin-bottom:14px; }
+.photo-hero p { font-size:14.5px; line-height:1.65; color:#C7D0DC; margin-bottom:26px; max-width:480px; }
+.photo-hero .btns { display:flex; gap:14px; }
+.btn-primary { background:#E8720C; color:#16253D; padding:13px 26px; font-size:14px; font-weight:600; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.btn-outline { background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.3); color:#EEF2F5; padding:12px 26px; font-size:14px; font-weight:500; text-decoration:none; backdrop-filter:blur(3px); }
+
+/* SEÇÃO: Como respondemos a um incidente (referência 21st.dev "How it works") */
+.process-section { padding:0 64px 64px; }
+.section-head { max-width:680px; margin-bottom:44px; }
+.section-head h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:26px; color:#16253D; margin-bottom:10px; }
+.section-head p { font-size:14px; color:#5A6B80; }
+
+.process-bar { display:flex; align-items:center; max-width:1000px; margin-bottom:0; position:relative; }
+.process-bar::before { content:''; position:absolute; top:16px; left:16px; right:16px; height:1.5px; background:#D4DCE3; z-index:0; }
+.pstep-num { width:32px; height:32px; border-radius:50%; background:#fff; border:1.5px solid #16253D; color:#16253D; display:flex; align-items:center; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; position:relative; z-index:1; flex-shrink:0; }
+.pstep-spacer { flex:1; }
+
+.process-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; max-width:1000px; margin-top:24px; }
+.pcard { background:#fff; border:1px solid #D4DCE3; border-radius:8px; padding:20px 16px; }
+.pcard h4 { font-family:'Archivo',sans-serif; font-weight:700; font-size:13.5px; color:#16253D; margin-bottom:8px; }
+.pcard p { font-size:11.5px; line-height:1.5; color:#5A6B80; }
+
+/* O QUE FAZEMOS PRA MELHORAR — lista substancial */
+.improve-section { padding:0 64px 64px; }
+.feature-list { display:flex; flex-direction:column; max-width:760px; }
+.feature-item { display:flex; gap:20px; padding:22px 0; border-bottom:1px solid #D4DCE3; }
+.feature-item:first-child { border-top:1px solid #D4DCE3; }
+.feature-item .num { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; flex-shrink:0; width:24px; padding-top:2px; }
+.feature-item .txt h4 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; color:#16253D; margin-bottom:8px; }
+.feature-item .txt p { font-size:13.5px; color:#3D4E63; line-height:1.6; }
+
+/* COMPARAÇÃO NARRATIVA (mesmo padrão da Infraestrutura) */
+.compare-section { padding:0 64px 64px; }
+.compare-cols { display:grid; grid-template-columns:1fr 1fr; gap:0; max-width:1000px; border:1.5px solid #D4DCE3; border-radius:8px; overflow:hidden; }
+.compare-col { padding:32px 36px; }
+.compare-col.before { background:#fff; border-right:1px solid #D4DCE3; }
+.compare-col.after { background:#16253D; }
+.compare-col .col-head { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+.compare-col .col-head .ico { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+.compare-col.before .col-head .ico { background:#F3EFE6; color:#8AA0B8; border:1px solid #D4DCE3; }
+.compare-col.after .col-head .ico { background:#E8720C; color:#16253D; }
+.compare-col .col-head span.lbl { font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; }
+.compare-col.before .col-head span.lbl { color:#8AA0B8; }
+.compare-col.after .col-head span.lbl { color:#8E9DB0; }
+.compare-col ul { list-style:none; display:flex; flex-direction:column; gap:20px; }
+.compare-col li { display:flex; gap:12px; align-items:flex-start; font-size:13.5px; line-height:1.6; }
+.compare-col.before li { color:#5A6B80; }
+.compare-col.after li { color:#D7DEE6; }
+.compare-col li .mark { flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:13px; margin-top:1px; }
+.compare-col.before li .mark { color:#C7D3DD; }
+.compare-col.after li .mark { color:#4ADE80; }
+
+@media (max-width: 900px) {
+  .process-grid { grid-template-columns:repeat(2,1fr); }
+  .process-bar { display:none; }
+}
+@media (max-width: 760px) {
+  .nav { padding:18px 24px; }
+  .nav-pill { display:none; }
+  .process-section, .improve-section, .compare-section { padding-left:24px; padding-right:24px; }
+  .photo-hero { height:600px; }
+  .photo-hero img.bg { object-position:center 18%; }
+  .photo-hero .overlay { background: linear-gradient(0deg, rgba(13,21,32,0.98) 0%, rgba(13,21,32,0.9) 40%, rgba(13,21,32,0.25) 68%, rgba(13,21,32,0) 85%); }
+  .photo-hero .content { top:auto; left:0; right:0; bottom:0; justify-content:flex-end; max-width:none; padding:0 24px 32px; }
+  .process-grid { grid-template-columns:1fr; }
+  .compare-cols { grid-template-columns:1fr; }
+  .compare-col.before { border-right:none; border-bottom:1px solid #D4DCE3; }
+  .compare-col { padding:26px 22px; }
+}
+</style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand"><img src="[DATA_IMAGE:image/png:138KB]" alt="JR"></div>
+    <div class="nav-pill"><a href="#"><span class="n">01</span>Soluções</a><a href="#"><span class="n">02</span>Projetos</a><a href="#"><span class="n">03</span>Sobre</a><a href="#"><span class="n">04</span>Contato</a></div>
+    <a class="cta" href="#">Solicitar diagnóstico</a>
+  </div>
+
+  <div class="photo-hero">
+    <img class="bg" src="[DATA_IMAGE:image/png:2436KB]" alt="Especialista JR monitorando alertas de segurança da informação em painel SIEM">
+    <div class="overlay"></div>
+    <div class="content">
+      <span class="kicker">Solução · Segurança</span>
+      <h1>Segurança como critério do projeto, não como serviço extra</h1>
+      <p>Boas práticas de segurança entram no planejamento desde o início — controle de acesso, proteção de dados e hardening antes que o problema apareça, não depois.</p>
+      <div class="btns"><a class="btn-primary" href="#">Solicitar diagnóstico</a><a class="btn-outline" href="#">Falar no WhatsApp</a></div>
+    </div>
+  </div>
+
+  <div class="process-section">
+    <div class="section-head">
+      <h2>Como respondemos a um incidente</h2>
+      <p>Um processo estruturado, não improviso — cada etapa documentada do momento da detecção até a normalização do ambiente.</p>
+    </div>
+    <div class="process-bar"><div class="pstep-num">1</div><div class="pstep-spacer"></div><div class="pstep-num">2</div><div class="pstep-spacer"></div><div class="pstep-num">3</div><div class="pstep-spacer"></div><div class="pstep-num">4</div><div class="pstep-spacer"></div><div class="pstep-num">5</div></div>
+    <div class="process-grid"><div class="pcard"><h4>1. Identificação</h4><p>Ameaça detectada e classificada automaticamente pelos alertas do sistema de monitoramento.</p></div><div class="pcard"><h4>2. Investigação</h4><p>Análise da origem, do método e do impacto real do incidente antes de qualquer ação.</p></div><div class="pcard"><h4>3. Contenção</h4><p>IP ou acesso suspeito bloqueado e regras de segurança aplicadas imediatamente.</p></div><div class="pcard"><h4>4. Erradicação</h4><p>Remoção completa da ameaça e dos artefatos deixados no ambiente.</p></div><div class="pcard"><h4>5. Recuperação</h4><p>Sistema normalizado, monitorado e documentado após o incidente.</p></div></div>
+  </div>
+
+  <div class="improve-section">
+    <div class="section-head">
+      <h2>O que fazemos para melhorar a segurança da sua empresa</h2>
+      <p>Não é um produto único — é um conjunto de práticas aplicadas de forma contínua.</p>
+    </div>
+    <div class="feature-list"><div class="feature-item"><div class="num">01</div><div class="txt"><h4>Controle de acesso</h4><p>Políticas e permissões por perfil — cada pessoa vê e altera só o que precisa para o próprio trabalho, reduzindo o risco de erro ou uso indevido.</p></div></div><div class="feature-item"><div class="num">02</div><div class="txt"><h4>Proteção de dados</h4><p>Criptografia e rotina de backup testada, não apenas configurada e esquecida — validamos periodicamente que a restauração funciona de verdade.</p></div></div><div class="feature-item"><div class="num">03</div><div class="txt"><h4>Boas práticas e compliance</h4><p>Frameworks reconhecidos de segurança, adaptados ao porte real da empresa — não um checklist genérico de multinacional que não se aplica ao seu contexto.</p></div></div><div class="feature-item"><div class="num">04</div><div class="txt"><h4>Hardening preventivo</h4><p>Redução da superfície de ataque antes do incidente acontecer, não como resposta emergencial depois que o problema já causou dano.</p></div></div></div>
+  </div>
+
+  <div class="compare-section">
+    <div class="section-head">
+      <h2>Sem cuidado com segurança ou com a JR? Veja o que muda</h2>
+      <p>A diferença aparece antes do incidente acontecer — ou depois, quando já é tarde.</p>
+    </div>
+    <div class="compare-cols">
+      <div class="compare-col before"><div class="col-head"><div class="ico">!</div><span class="lbl">Sem cuidado com segurança</span></div><ul><li><span class="mark">−</span><span>Sem controle de quem acessa o quê — qualquer pessoa vê qualquer sistema.</span></li><li><span class="mark">−</span><span>Você descobre o incidente quando o dano já aconteceu.</span></li><li><span class="mark">−</span><span>Backup e plano de recuperação nunca testados de verdade.</span></li><li><span class="mark">−</span><span>Vulnerabilidades só corrigidas depois de já terem sido exploradas.</span></li></ul></div>
+      <div class="compare-col after"><div class="col-head"><div class="ico">✓</div><span class="lbl">Com a JR</span></div><ul><li><span class="mark">✓</span><span>Controle de acesso por perfil — cada pessoa vê e altera só o que precisa para o trabalho.</span></li><li><span class="mark">✓</span><span>Detecção em tempo real com alertas — resposta em minutos, não depois do estrago feito.</span></li><li><span class="mark">✓</span><span>Plano de resposta a incidente testado, documentado e pronto pra ser executado.</span></li><li><span class="mark">✓</span><span>Hardening preventivo reduz a superfície de ataque antes que alguém tente explorá-la.</span></li></ul></div>
+    </div>
+  </div>
+</body>
+</html>

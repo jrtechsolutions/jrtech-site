@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { sobre } from "@/data/content";
 import { animateCounter } from "@/lib/easing";
 import { usePrefersReducedMotion } from "@/lib/motion";
@@ -180,6 +181,14 @@ export function Sobre() {
             </span>
           </div>
         </div>
+      </div>
+      <div className="site-container mt-8 pb-2">
+        <Link
+          href="/sobre"
+          className="font-mono text-[12px] text-signal underline-offset-2 transition-colors hover:text-ink hover:underline"
+        >
+          Conhecer a JR →
+        </Link>
       </div>
     </section>
   );

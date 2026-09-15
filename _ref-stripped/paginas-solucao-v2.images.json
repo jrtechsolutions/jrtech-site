@@ -1,0 +1,38 @@
+[
+  {
+    "idx": 1,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": "do partes reais do painel. \"O que inclui\" agora tem nome + contexto, igual à seção Tecnologias da home.</p></div> <div class=\"site\"> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"><a href=\"#\"><span class=\"n\">01</span>Soluções</a><a href=\"#\""
+  },
+  {
+    "idx": 2,
+    "mime": "image/jpeg",
+    "bytes": 44043,
+    "kb": 43,
+    "mb": 0.04,
+    "contextBefore": " em São Paulo</h1> <p class=\"lede\">Ambientes estáveis, monitorados e preparados para crescer — sem improvisos que viram custo e risco depois.</p> <div class=\"graf-wrap\"> <img src=\"",
+    "contextAfter": "\" alt=\"Painel real de monitoramento Grafana da JR\"> <div class=\"graf-anno a1\"><div class=\"line\"></di"
+  },
+  {
+    "idx": 3,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": "verdade na implementação). Formato de \"janela de navegador\" pra deixar claro que são sites reais no ar.</p></div> <div class=\"site\"> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"><a href=\"#\"><span class=\"n\">01</span>Soluções</a><a href=\"#\""
+  },
+  {
+    "idx": 4,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": "ui o \"cadeado aberto/fechado\" genérico por algo mais específico do vocabulário de segurança em camadas.</p></div> <div class=\"site\"> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"><a href=\"#\"><span class=\"n\">01</span>Soluções</a><a href=\"#\""
+  }
+]

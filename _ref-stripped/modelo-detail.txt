@@ -1,0 +1,144 @@
+﻿===== MODELO STRUCTURE =====
+h2: [
+  'O que inclui',
+  'Resultado esperado',
+  'Ambiente real monitorado pela JR',
+  'D├║vidas sobre este pilar'
+]
+has class: proof-block
+
+===== MODELO TEXT =====
+01Solu├º├Áes
+      02Projetos
+      03Sobre
+      04Contato
+
+    Solicitar diagn├│stico
+
+  ÔåÉ Todas as solu├º├Áes
+
+      Solu├º├úo ┬À Infraestrutura
+      Infraestrutura e Cloud para empresas em S├úo Paulo
+
+      Ambientes est├íveis, monitorados e preparados para crescer ÔÇö sem improvisos que viram custo e risco depois.
+
+CLOUD
+
+SERVIDORES
+
+REDE
+
+BACKUP
+
+AWS / Azure / GCP
+
+monitorado ┬À 24/7
+
+restaura├º├úo testada
+
+      A JR Technology Solutions organiza a infraestrutura de TI de pequenas e m├®dias empresas em S├úo Paulo: servidores, redes, ambientes cloud e rotinas de backup. O ponto de partida ├® um diagn├│stico do que j├í existe ÔÇö na maioria dos casos o caminho ├® ajustar e documentar, n├úo trocar tudo.
+
+      Trabalhamos com Linux, Docker e provedores cloud (AWS, Azure ou GCP) conforme a necessidade real do neg├│cio. Monitoramento com m├®tricas e alertas entra no desenho para voc├¬ saber o que est├í acontecendo antes que vire incidente.
+
+      O que inclui
+
+        Servidores e ambientes de produ├º├úo
+
+        Redes e segmenta├º├úo
+
+        Cloud (AWS / Azure / GCP)
+
+        Monitoramento e alertas
+
+        Backups e restaura├º├úo testada
+
+      Resultado esperado
+
+        Ô£ô
+Menos indisponibilidade e surpresas
+
+        Ô£ô
+Ambiente documentado e reproduz├¡vel
+
+        Ô£ô
+Custo de infraestrutura alinhado ao uso real
+
+      Ambiente real monitorado pela JR
+
+      Este ├® o painel de monitoramento que usamos internamente ÔÇö o mesmo tipo de visibilidade que aplicamos nos ambientes dos clientes.
+
+        Grafana + Prometheus ┬À m├®tricas de CPU, mem├│ria, disco e rede em tempo real
+
+      D├║vidas sobre este pilar
+
+        Preciso trocar meu servidor atual?
+
+        Na maioria dos casos, n├úo ÔÇö o diagn├│stico avalia o que j├í existe antes de qualquer substitui├º├úo.
+
+        Funciona com qualquer provedor de cloud?
+
+        Sim ÔÇö trabalhamos com AWS, Azure e GCP conforme o que j├í estiver em uso ou fizer mais sentido pro seu caso.
+
+vis├úo geral
+
+o que inclui
+
+resultado
+
+ambiente real
+
+d├║vidas
+
+    Quer um diagn├│stico deste pilar?
+Conversa de 30ÔÇô40 minutos, presencial em S├úo Paulo ou remota ÔÇö sem custo e sem compromisso.
+
+    Falar no WhatsApp
+
+    Outras solu├º├Áes
+
+      02
+Seguran├ºa da Informa├º├úo
+
+      03
+Desenvolvimento
+
+      04
+Governan├ºa de Tecnologia
+
+      05
+Suporte e Gest├úo de TI
+
+===== V2 INFRA TEXT =====
+01Solu├º├Áes02Projetos03Sobre04Contato
+
+    Solicitar diagn├│stico
+
+  ÔåÉ Todas as solu├º├Áes
+
+    Solu├º├úo ┬À Infraestrutura
+    Infraestrutura e Cloud para empresas em S├úo Paulo
+
+    Ambientes est├íveis, monitorados e preparados para crescer ÔÇö sem improvisos que viram custo e risco depois.
+
+status em tempo real
+
+alertas autom├íticos
+
+      Ambiente de monitoramento real da JR ÔÇö Grafana + Prometheus
+
+      O que inclui
+
+        Servidores
+ambientes de produ├º├úo monitorados
+
+        Redes
+segmenta├º├úo e controle de tr├ífego
+
+        Cloud
+AWS / Azure / GCP conforme necessidade
+
+        Monitoramento
+m├®tricas e alertas em tempo real
+
+        Backups
+rotina testada de restaura├º├úo

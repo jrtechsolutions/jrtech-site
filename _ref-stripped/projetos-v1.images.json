@@ -1,0 +1,38 @@
+[
+  {
+    "idx": 1,
+    "mime": "image/png",
+    "bytes": 140904,
+    "kb": 138,
+    "mb": 0.13,
+    "contextBefore": ":none; } .page-hero, .project-block { padding-left:24px; padding-right:24px; } .divider { margin:0 24px; } } </style> </head> <body> <div class=\"nav\"> <div class=\"brand\"><img src=\"",
+    "contextAfter": "\" alt=\"JR\"></div> <div class=\"nav-pill\"><a href=\"#\">Soluções</a><a href=\"#\" class=\"active\">Projetos<"
+  },
+  {
+    "idx": 2,
+    "mime": "image/png",
+    "bytes": 253137,
+    "kb": 247,
+    "mb": 0.24,
+    "contextBefore": "ner\"> <div class=\"shot-wrap\"> <div class=\"shot-bar\"><div class=\"dot\"></div><div class=\"dot\"></div><div class=\"dot\"></div><span class=\"url\">fatiadelei.com.br</span></div> <img src=\"",
+    "contextAfter": "\" alt=\"Fatia de Lei\"> </div> <div class=\"proj-text\"> <span class=\"cat\">E-commerce</span> <h2>Fatia d"
+  },
+  {
+    "idx": 3,
+    "mime": "image/png",
+    "bytes": 441138,
+    "kb": 431,
+    "mb": 0.42,
+    "contextBefore": "r\"> <div class=\"shot-wrap\"> <div class=\"shot-bar\"><div class=\"dot\"></div><div class=\"dot\"></div><div class=\"dot\"></div><span class=\"url\">adegadokinho.com.br</span></div> <img src=\"",
+    "contextAfter": "\" alt=\"Adega do Kinho\"> </div> <div class=\"proj-text\"> <span class=\"cat\">E-commerce + PDV</span> <h2"
+  },
+  {
+    "idx": 4,
+    "mime": "image/png",
+    "bytes": 305676,
+    "kb": 299,
+    "mb": 0.29,
+    "contextBefore": "nner\"> <div class=\"shot-wrap\"> <div class=\"shot-bar\"><div class=\"dot\"></div><div class=\"dot\"></div><div class=\"dot\"></div><span class=\"url\">pratooapp.com.br</span></div> <img src=\"",
+    "contextAfter": "\" alt=\"Pratoo\"> </div> <div class=\"proj-text\"> <span class=\"cat\">SaaS</span> <h2>Pratoo</h2> <"
+  }
+]

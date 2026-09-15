@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suporte e Gestão de TI — página completa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700&family=Archivo:wght@600&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#EEF2F5; font-family:'Public Sans',sans-serif; }
+
+.nav { display:flex; align-items:center; justify-content:space-between; padding:24px 64px; }
+.nav .brand img { height:26px; }
+.nav-pill { display:flex; align-items:center; background:#fff; border:1px solid #D4DCE3; border-radius:6px; padding:5px; gap:2px; }
+.nav-pill a { font-family:'Public Sans',sans-serif; font-size:13.5px; color:#3D4E63; text-decoration:none; padding:9px 16px; border-radius:4px; display:flex; gap:6px; }
+.nav-pill a .n { font-family:'IBM Plex Mono',monospace; font-size:9.5px; opacity:0.6; }
+.nav .cta { background:#16253D; color:#EEF2F5; padding:11px 22px; font-size:13.5px; font-weight:500; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.kicker { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:16px; display:block; }
+
+.photo-hero { position:relative; height:520px; overflow:hidden; margin-bottom:64px; }
+.photo-hero img.bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:20% 22%; }
+.photo-hero .overlay { position:absolute; inset:0; background: linear-gradient(90deg, rgba(13,21,32,0) 0%, rgba(13,21,32,0.35) 38%, rgba(13,21,32,0.85) 58%, rgba(13,21,32,0.97) 100%); }
+.photo-hero .content { position:absolute; top:0; right:0; bottom:0; display:flex; flex-direction:column; justify-content:center; padding:0 64px; max-width:520px; }
+.photo-hero .kicker { color:#F5A25C; }
+.photo-hero h1 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:32px; line-height:1.18; color:#EEF2F5; margin-bottom:14px; }
+.photo-hero p { font-size:14.5px; line-height:1.65; color:#C7D0DC; margin-bottom:26px; max-width:480px; }
+.photo-hero .btns { display:flex; gap:14px; }
+.btn-primary { background:#E8720C; color:#16253D; padding:13px 26px; font-size:14px; font-weight:600; text-decoration:none; clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+.btn-outline { background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.3); color:#EEF2F5; padding:12px 26px; font-size:14px; font-weight:500; text-decoration:none; backdrop-filter:blur(3px); }
+
+.section-head { max-width:680px; margin:0 64px 32px; }
+.section-head h2 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:26px; color:#16253D; margin-bottom:10px; }
+.section-head p { font-size:14px; color:#5A6B80; }
+
+/* COMO FUNCIONA O SUPORTE — fluxo de chamado */
+.flow-section { padding:0 64px 64px; }
+.flow-row { display:flex; align-items:center; max-width:760px; margin-bottom:36px; }
+.flow-step { display:flex; align-items:center; gap:12px; }
+.flow-step .dot { width:14px; height:14px; border-radius:50%; border:2px solid #16253D; background:#fff; flex-shrink:0; }
+.flow-step.done .dot { background:#16253D; }
+.flow-step span.lbl { font-family:'Archivo',sans-serif; font-weight:600; font-size:13.5px; color:#16253D; white-space:nowrap; }
+.flow-line { flex:1; height:1.5px; background:#D4DCE3; margin:0 12px; }
+.flow-note { max-width:640px; font-size:14px; color:#3D4E63; line-height:1.7; }
+.flow-note strong { color:#16253D; }
+
+/* CONVERSA DE EXEMPLO */
+.chat-section { padding:0 64px 64px; }
+.chat-box { max-width:520px; border:1.5px solid #16253D; border-radius:10px; overflow:hidden; background:#fff; }
+.chat-bar { background:#16253D; padding:12px 18px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#EEF2F5; display:flex; align-items:center; gap:8px; }
+.chat-bar .dot { width:6px; height:6px; border-radius:50%; background:#4ADE80; }
+.chat-body { padding:20px; display:flex; flex-direction:column; gap:12px; }
+.msg { max-width:80%; padding:10px 14px; border-radius:12px; font-size:13px; line-height:1.5; }
+.msg.client { background:#F1F3F5; color:#16253D; align-self:flex-start; border-bottom-left-radius:2px; }
+.msg.jr { background:#16253D; color:#EEF2F5; align-self:flex-end; border-bottom-right-radius:2px; }
+.msg .time { display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; opacity:0.6; margin-top:4px; }
+
+/* O QUE COBRIMOS */
+.cover-section { padding:0 64px 64px; }
+.feature-list { display:flex; flex-direction:column; max-width:760px; }
+.feature-item { display:flex; gap:20px; padding:22px 0; border-bottom:1px solid #D4DCE3; }
+.feature-item:first-child { border-top:1px solid #D4DCE3; }
+.feature-item .num { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; flex-shrink:0; width:24px; padding-top:2px; }
+.feature-item .txt h4 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:16px; color:#16253D; margin-bottom:8px; }
+.feature-item .txt p { font-size:13.5px; color:#3D4E63; line-height:1.6; }
+
+/* MONITORAMENTO CONTÍNUO */
+.monitor-section { padding:0 64px 64px; }
+.monitor-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:800px; }
+.mon-item { background:#fff; border:1px solid #D4DCE3; border-radius:6px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; }
+.mon-item .name { font-family:'Archivo',sans-serif; font-weight:600; font-size:13px; color:#16253D; }
+.mon-item .status { display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#1E7A46; }
+.mon-item .status .dot { width:6px; height:6px; border-radius:50%; background:#1E7A46; }
+
+/* COMPARAÇÃO */
+.compare-section { padding:0 64px 64px; }
+.compare-cols { display:grid; grid-template-columns:1fr 1fr; gap:0; max-width:1000px; border:1.5px solid #D4DCE3; border-radius:8px; overflow:hidden; }
+.compare-col { padding:32px 36px; }
+.compare-col.before { background:#fff; border-right:1px solid #D4DCE3; }
+.compare-col.after { background:#16253D; }
+.compare-col .col-head { display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+.compare-col .col-head .ico { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0; }
+.compare-col.before .col-head .ico { background:#F3EFE6; color:#8AA0B8; border:1px solid #D4DCE3; }
+.compare-col.after .col-head .ico { background:#E8720C; color:#16253D; }
+.compare-col .col-head span.lbl { font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; }
+.compare-col.before .col-head span.lbl { color:#8AA0B8; }
+.compare-col.after .col-head span.lbl { color:#8E9DB0; }
+.compare-col ul { list-style:none; display:flex; flex-direction:column; gap:20px; }
+.compare-col li { display:flex; gap:12px; align-items:flex-start; font-size:13.5px; line-height:1.6; }
+.compare-col.before li { color:#5A6B80; }
+.compare-col.after li { color:#D7DEE6; }
+.compare-col li .mark { flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:13px; margin-top:1px; }
+.compare-col.before li .mark { color:#C7D3DD; }
+.compare-col.after li .mark { color:#4ADE80; }
+
+@media (max-width: 760px) {
+  .nav { padding:18px 24px; }
+  .nav-pill { display:none; }
+  .section-head, .flow-section, .chat-section, .cover-section, .monitor-section, .compare-section { padding-left:24px; padding-right:24px; margin-left:0; margin-right:0; }
+  .photo-hero { height:600px; }
+  .photo-hero img.bg { object-position:center 18%; }
+  .photo-hero .overlay { background: linear-gradient(0deg, rgba(13,21,32,0.98) 0%, rgba(13,21,32,0.9) 40%, rgba(13,21,32,0.25) 68%, rgba(13,21,32,0) 85%); }
+  .photo-hero .content { top:auto; left:0; right:0; bottom:0; justify-content:flex-end; max-width:none; padding:0 24px 32px; }
+  .flow-row { flex-wrap:wrap; gap:12px; }
+  .flow-line { display:none; }
+  .monitor-grid { grid-template-columns:1fr; }
+  .compare-cols { grid-template-columns:1fr; }
+  .compare-col.before { border-right:none; border-bottom:1px solid #D4DCE3; }
+  .compare-col { padding:26px 22px; }
+}
+</style>
+</head>
+<body>
+  <div class="nav">
+    <div class="brand"><img src="[DATA_IMAGE:image/png:138KB]" alt="JR"></div>
+    <div class="nav-pill"><a href="#"><span class="n">01</span>Soluções</a><a href="#"><span class="n">02</span>Projetos</a><a href="#"><span class="n">03</span>Sobre</a><a href="#"><span class="n">04</span>Contato</a></div>
+    <a class="cta" href="#">Solicitar diagnóstico</a>
+  </div>
+
+  <div class="photo-hero">
+    <img class="bg" src="[DATA_IMAGE:image/png:2456KB]" alt="Especialista JR atendendo chamado de suporte técnico">
+    <div class="overlay"></div>
+    <div class="content">
+      <span class="kicker">Solução · Suporte</span>
+      <h1>Sua tecnologia funcionando sem improvisos</h1>
+      <p>Tecnologia que mantém seu negócio sempre online — suporte com quem já conhece seu ambiente, não um protocolo genérico de central de atendimento.</p>
+      <div class="btns"><a class="btn-primary" href="#">Solicitar diagnóstico</a><a class="btn-outline" href="#">Falar no WhatsApp</a></div>
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <div class="section-head"><h2>Como funciona um chamado</h2><p>Cada chamado segue o mesmo fluxo, com prazo definido por prioridade — não uma fila genérica onde tudo espera igual.</p></div>
+    <div class="flow-row">
+<div class="flow-step done"><div class="dot"></div><span class="lbl">Chamado aberto</span></div>
+<div class="flow-line"></div>
+<div class="flow-step done"><div class="dot"></div><span class="lbl">Classificado por prioridade</span></div>
+<div class="flow-line"></div>
+<div class="flow-step done"><div class="dot"></div><span class="lbl">Em atendimento</span></div>
+<div class="flow-line"></div>
+<div class="flow-step done"><div class="dot"></div><span class="lbl">Resolvido</span></div></div>
+    <p class="flow-note"><strong>Chamados críticos têm resposta em até 2 horas.</strong> Você acompanha o status em tempo real, sem precisar ficar cobrando por atualização.</p>
+  </div>
+
+  <div class="chat-section">
+    <div class="section-head"><h2>Um atendimento real, sem enrolação</h2><p>Direto com quem resolve — sem escalonamento por níveis de atendimento.</p></div>
+    <div class="chat-box">
+      <div class="chat-bar"><div class="dot"></div>Suporte JR · online</div>
+      <div class="chat-body">
+        <div class="msg client">Olá, meu sistema não está acessando o banco de dados, pode me ajudar?<span class="time">10:24</span></div>
+        <div class="msg jr">Olá! Vou verificar aqui. Já identifiquei o problema e estou aplicando a correção. Em alguns minutos já estará funcionando.<span class="time">10:27</span></div>
+        <div class="msg client">Perfeito, obrigado!<span class="time">10:28</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-section">
+    <div class="section-head"><h2>O que cobrimos</h2><p>Suporte não é só "consertar quando quebra" — é gestão contínua de cinco frentes.</p></div>
+    <div class="feature-list"><div class="feature-item"><div class="num">01</div><div class="txt"><h4>Infraestrutura</h4><p>Servidores, redes e ambientes cloud monitorados continuamente — não só quando algo já parou.</p></div></div><div class="feature-item"><div class="num">02</div><div class="txt"><h4>Segurança</h4><p>Firewall, backup e proteção contra ameaças (EDR) fazendo parte da rotina, não uma ação isolada.</p></div></div><div class="feature-item"><div class="num">03</div><div class="txt"><h4>Usuários</h4><p>Gestão de acessos e permissões organizada — sem depender de planilha solta ou memória de alguém.</p></div></div><div class="feature-item"><div class="num">04</div><div class="txt"><h4>Sistemas</h4><p>Aplicações e plataformas que a empresa usa no dia a dia, com suporte de quem já conhece o ambiente.</p></div></div><div class="feature-item"><div class="num">05</div><div class="txt"><h4>Projetos</h4><p>Implantação de novos sistemas com acompanhamento durante toda a transição, não só na entrega.</p></div></div></div>
+  </div>
+
+  <div class="monitor-section">
+    <div class="section-head"><h2>Monitoramento contínuo</h2><p>Serviços críticos observados em tempo real — se algo cair, a gente sabe antes do seu cliente perceber.</p></div>
+    <div class="monitor-grid"><div class="mon-item"><span class="name">Web Server</span><div class="status"><div class="dot"></div>monitorado</div></div><div class="mon-item"><span class="name">API</span><div class="status"><div class="dot"></div>monitorado</div></div><div class="mon-item"><span class="name">Banco de Dados</span><div class="status"><div class="dot"></div>monitorado</div></div><div class="mon-item"><span class="name">Automação (n8n)</span><div class="status"><div class="dot"></div>monitorado</div></div><div class="mon-item"><span class="name">Monitoramento (Grafana)</span><div class="status"><div class="dot"></div>monitorado</div></div><div class="mon-item"><span class="name">Uptime Kuma</span><div class="status"><div class="dot"></div>monitorado</div></div></div>
+  </div>
+
+  <div class="compare-section">
+    <div class="section-head"><h2>Suporte reativo ou com a JR? Veja o que muda</h2><p>A diferença aparece no dia em que algo dá errado — ou antes disso.</p></div>
+    <div class="compare-cols">
+      <div class="compare-col before"><div class="col-head"><div class="ico">!</div><span class="lbl">Suporte reativo</span></div><ul><li><span class="mark">−</span><span>Chamado aberto num grupo de WhatsApp, sem prioridade nem prazo definido.</span></li><li><span class="mark">−</span><span>Cada atendimento parte do zero, com alguém que não conhece seu ambiente.</span></li><li><span class="mark">−</span><span>Você descobre que o backup falhou quando precisa restaurar algo.</span></li><li><span class="mark">−</span><span>Suporte reativo — só aparece quando o cliente reclama.</span></li></ul></div>
+      <div class="compare-col after"><div class="col-head"><div class="ico">✓</div><span class="lbl">Com a JR</span></div><ul><li><span class="mark">✓</span><span>Chamado classificado por prioridade, com tempo de resposta definido.</span></li><li><span class="mark">✓</span><span>Atendimento com quem já conhece sua infraestrutura, sistemas e histórico.</span></li><li><span class="mark">✓</span><span>Backups e serviços críticos monitorados continuamente, em tempo real.</span></li><li><span class="mark">✓</span><span>Acompanhamento contínuo — tarefas de manutenção rodando antes de virar problema.</span></li></ul></div>
+    </div>
+  </div>
+</body>
+</html>

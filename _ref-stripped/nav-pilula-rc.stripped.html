@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JR — Nav em pílula (final, sem wordmark e sem badge)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@700&family=Public+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#0d0d0d; font-family:'Public Sans',sans-serif; }
+.label-bar { max-width:1200px; margin:0 auto; padding:36px 32px 8px; color:#999; }
+.label-bar h1 { font-size:17px; color:#eee; font-weight:500; margin-bottom:4px; font-family:'Archivo',sans-serif; }
+.label-bar p { font-size:13px; color:#888; line-height:1.6; max-width:800px; }
+.site { background:#EEF2F5; padding:0; }
+img.logo { height:26px; }
+
+.nav { display:flex; align-items:center; justify-content:space-between; padding:24px 64px; }
+.nav .brand { display:flex; align-items:center; }
+
+.nav-pill {
+  display:flex; align-items:center; background:#fff; border:1px solid #D4DCE3;
+  border-radius:6px; padding:5px; gap:2px;
+}
+.nav-pill a {
+  font-family:'Public Sans',sans-serif; font-size:13.5px; color:#3D4E63; text-decoration:none;
+  padding:9px 16px; border-radius:4px; display:flex; align-items:baseline; gap:6px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-pill a .n { font-family:'IBM Plex Mono',monospace; font-size:9.5px; opacity:0.6; }
+.nav-pill a:hover, .nav-pill a.active { background:#16253D; color:#EEF2F5; }
+.nav-pill a.active .n, .nav-pill a:hover .n { opacity:0.5; }
+
+.cta { background:#16253D; color:#EEF2F5; padding:11px 22px; font-size:13.5px; font-weight:500; text-decoration:none;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%); }
+
+.hero-preview { padding:80px 64px 60px; }
+.hero-preview .eyebrow { font-family:'IBM Plex Mono',monospace; font-size:12px; color:#E8720C; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:18px; display:block; }
+.hero-preview h1 { font-family:'Archivo Expanded',sans-serif; font-weight:700; font-size:38px; line-height:1.15; color:#16253D; max-width:640px; }
+</style>
+</head>
+<body>
+<div class="label-bar">
+  <h1>Nav final — sem "Technology Solutions" ao lado do logo, sem badge "ambiente monitorado"</h1>
+  <p>Logo sozinho à esquerda (sem texto ao lado — a imagem do logo já inclui "Technology Solutions" escrito nela, então era redundante). Badge de status removido por completo — fica só a pílula de navegação e o CTA.</p>
+</div>
+<div class="site">
+  <div class="nav">
+    <div class="brand"><img class="logo" src="[DATA_IMAGE:image/png:138KB]" alt="JR Technology Solutions"></div>
+    <div class="nav-pill">
+      <a href="#" class="active"><span class="n">01</span>Soluções</a>
+      <a href="#"><span class="n">02</span>Projetos</a>
+      <a href="#"><span class="n">03</span>Sobre</a>
+      <a href="#"><span class="n">04</span>Contato</a>
+    </div>
+    <a class="cta" href="#">Solicitar diagnóstico</a>
+  </div>
+  <div class="hero-preview">
+    <span class="eyebrow">Consultoria técnica · São Paulo</span>
+    <h1>Organizamos, protegemos e evoluímos a tecnologia da sua empresa</h1>
+  </div>
+</div>
+</body>
+</html>
